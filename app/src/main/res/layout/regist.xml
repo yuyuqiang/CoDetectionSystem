@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#f22e2c2c"
+    >
+
+    <ImageView
+
+        android:layout_marginTop="150dp"
+        android:id="@+id/iv_personal_icon"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_marginStart="140dp"
+        android:src="@drawable/ic_touxiang"
+        />
+
+    <RelativeLayout
+        android:id="@+id/regist_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:gravity="center"
+        >
+
+        <FrameLayout
+            android:id="@+id/username_layout"
+            android:layout_width="330dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="280dp"
+            android:layout_marginStart="10dp"
+            android:background="@drawable/shape1"
+            android:gravity="center">
+
+
+            <EditText
+                android:id="@+id/username_regist"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:maxLength="20"
+                android:textColorHint="#b3b0b0"
+                android:textColor="@android:color/white"
+                android:paddingLeft="90dp"
+                android:background="@null"
+                android:paddingRight="60dp" />
+
+            <Button
+                android:id="@+id/bt_username_clear_regist"
+                android:layout_width="23dp"
+                android:layout_height="23dp"
+                android:layout_gravity="right|center_vertical"
+                android:layout_marginRight="10dp"
+                android:background="@drawable/cuo"
+                android:visibility="invisible" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="left|center_vertical"
+                android:layout_marginLeft="8dp"
+                android:text="username："
+                android:textColor="@android:color/white"
+                android:textSize="16dp" />
+        </FrameLayout>
+
+        <FrameLayout
+        android:id="@+id/password_layout"
+        android:layout_width="330dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/username_layout"
+        android:layout_marginTop="10dp"
+        android:layout_marginStart="10dp"
+            android:background="@drawable/shape1"
+        android:gravity="center">
+
+        <EditText
+            android:id="@+id/password_regist"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:inputType="textPassword"
+            android:maxLength="20"
+            android:textColorHint="#b3b0b0"
+            android:textColor="@android:color/white"
+            android:background="@null"
+            android:paddingLeft="90dp"
+            android:paddingRight="60dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="left|center_vertical"
+            android:layout_marginLeft="8dp"
+            android:text="password："
+            android:textSize="16dp"
+            android:textColor="@android:color/white"/>
+
+        <Button
+            android:id="@+id/bt_pwd_clear_regist_1"
+            android:layout_width="23dp"
+            android:layout_height="23dp"
+            android:layout_gravity="right|center_vertical"
+            android:layout_marginRight="10dp"
+            android:background="@drawable/cuo"
+            android:visibility="invisible" />
+
+    </FrameLayout>
+        <FrameLayout
+            android:layout_width="330dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/username_layout"
+            android:layout_marginTop="65dp"
+            android:layout_marginStart="10dp"
+            android:background="@drawable/shape1"
+            android:gravity="center">
+
+            <EditText
+                android:id="@+id/telephone_regist"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:inputType="number"
+                android:maxLength="20"
+                android:textColorHint="#b3b0b0"
+                android:textColor="@android:color/white"
+                android:background="@null"
+                android:paddingLeft="90dp"
+                android:paddingRight="60dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="left|center_vertical"
+                android:layout_marginLeft="8dp"
+                android:text="telephone："
+                android:textSize="16dp"
+                android:textColor="@android:color/white" />
+
+            <Button
+                android:layout_width="23dp"
+                android:layout_height="23dp"
+                android:layout_gravity="right|center_vertical"
+                android:layout_marginRight="10dp"
+                android:background="@drawable/cuo"
+                android:visibility="invisible" />
+
+        </FrameLayout>
+        <FrameLayout
+            android:layout_width="330dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/username_layout"
+            android:layout_marginTop="115dp"
+            android:layout_marginStart="10dp"
+            android:gravity="center">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_gravity="center|left"
+                android:text="gender:"
+                android:textColor="@android:color/white"
+                android:textSize="16dp"
+                />
+            <RadioGroup
+                android:id="@+id/gender_group"
+                android:layout_width="210dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="125dp"
+                android:orientation="horizontal"
+
+                >
+                <RadioButton
+                    android:id="@+id/male_Radio"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="男"
+                    android:textColor="@android:color/white"
+                    />
+                <RadioButton
+                    android:id="@+id/female_Radio"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="女"
+                    android:layout_marginLeft="20dp"
+                    android:textColor="@android:color/white"
+                    />
+
+
+
+            </RadioGroup>
+
+
+
+
+
+        </FrameLayout>
+
+        <Button
+            android:id="@+id/register_bt"
+            android:layout_width="330dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="490dp"
+            android:gravity="center"
+            android:text="Register"
+            android:textColor="@android:color/white"
+            android:background="@drawable/shape"
+            android:textSize="24dp" />
+
+    </RelativeLayout>
+
+</RelativeLayout>
