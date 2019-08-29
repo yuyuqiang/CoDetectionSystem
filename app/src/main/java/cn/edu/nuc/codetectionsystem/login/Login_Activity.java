@@ -28,6 +28,7 @@ public class Login_Activity extends AppCompatActivity implements View.OnClickLis
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login);
+
         username = (EditText)findViewById(R.id.username);
         password = (EditText)findViewById(R.id.password);
         login_bt =(Button)findViewById(R.id.login_bt);

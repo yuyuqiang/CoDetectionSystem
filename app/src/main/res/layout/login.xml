@@ -2,19 +2,18 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#f22e2c2c"
     android:fitsSystemWindows="true"
     xmlns:tools="http://schemas.android.com/tools"
-
     tools:context=".login.Login_Activity"
+    android:background="#ffffff"
     >
+
     <ImageView
         android:layout_width="150sp"
-        android:layout_height="120sp"
-        android:layout_centerHorizontal="true"
+        android:layout_height="150sp"
         android:layout_marginTop="80dp"
-
-
+        android:layout_marginLeft="130dp"
+        android:background="@drawable/logo2"
         />
 
     <RelativeLayout
@@ -39,12 +38,12 @@
                 android:maxLength="20"
                 android:paddingLeft="55dp"
                 android:paddingRight="60dp"
-                android:hint="username"
+                android:hint="请输入用户名"
                 android:textColorHint="#b3b0b0"
-                android:textColor="@android:color/white"
+                android:textColor="@android:color/black"
                 />
 
-            <ImageView
+            <TextView
                 android:id="@+id/user_png"
                 android:layout_width="28dp"
                 android:layout_height="28dp"
@@ -77,8 +76,8 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:textColorHint="#b3b0b0"
-                android:hint="password"
-                android:textColor="@android:color/white"
+                android:hint="请输入登录密码"
+                android:textColor="@android:color/black"
                 android:inputType="textPassword"
                 android:maxLength="20"
                 android:paddingLeft="55dp"
@@ -108,7 +107,7 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:layout_below="@+id/usercode_layout"
-            android:text="Log In"
+            android:text="登   录"
             android:layout_marginTop="30dp"
             android:textColor="@android:color/white"
             android:background="@drawable/shape"
@@ -120,15 +119,14 @@
 
     <TextView
         android:id="@+id/register"
-        android:layout_width="100dp"
-        android:layout_height="60dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:gravity="center"
         android:layout_alignParentBottom="true"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
+        android:layout_marginStart="120dp"
         android:background="#00000000"
-        android:text="register"
+        android:text="新用户？立即注册"
         android:textSize="18sp"
-        android:textColor="#ffffff" />
+        android:textColor="#1d1b1b" />
 
 </RelativeLayout>
