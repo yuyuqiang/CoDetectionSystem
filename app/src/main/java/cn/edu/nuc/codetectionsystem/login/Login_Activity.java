@@ -10,12 +10,21 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import cn.edu.nuc.codetectionsystem.MainActivity;
 import cn.edu.nuc.codetectionsystem.R;
+import cn.edu.nuc.codetectionsystem.models.User;
+import cn.edu.nuc.codetectionsystem.models.UserJson;
+import cn.edu.nuc.codetectionsystem.until.GetPostUtil;
+import cn.edu.nuc.codetectionsystem.until.SaveUtils;
 
 public class Login_Activity extends AppCompatActivity implements View.OnClickListener {
-    private EditText username = null;
+    private EditText telephone = null;
     private EditText password = null;
     private Button login_bt = null;
     private TextView register = null;
@@ -23,25 +32,31 @@ public class Login_Activity extends AppCompatActivity implements View.OnClickLis
     private Button eye_png;
     private TextWatcher username_watcher;
     private TextWatcher password_watcher;
+    private String get;
+    private List<User> users;
+    private UserJson userJson;
+    private String number,passwordValue;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login);
 
-        username = (EditText)findViewById(R.id.username);
+        telephone = (EditText)findViewById(R.id.username);
         password = (EditText)findViewById(R.id.password);
         login_bt =(Button)findViewById(R.id.login_bt);
         register =(TextView)findViewById(R.id.register);
         cuo_png = (Button)findViewById(R.id.cuo_png);
         eye_png = (Button)findViewById(R.id.eye_png);
 
-        initWatcher();
+
 
         login_bt.setOnClickListener(this);
         register.setOnClickListener(this);
         cuo_png.setOnClickListener(this);
         eye_png.setOnClickListener(this);
+
+        initWatcher();
     }
 
 
@@ -87,8 +102,47 @@ public class Login_Activity extends AppCompatActivity implements View.OnClickLis
                 break;
 
             case R.id.login_bt:
-                Intent intent_login = new Intent(Login_Activity.this, MainActivity.class);
-                startActivity(intent_login);
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+
+                        number = telephone.getText().toString();
+                        passwordValue = password.getText().toString();
+                        String url = "http://47.94.19.124:8080/Winds/android/login?number="+ number +"&password="+passwordValue;
+                        get = GetPostUtil.sendGetRequest(url);
+
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                users = userJson.jsonTOObject(get);
+                                //判断信息是否符合
+                                if (number.toString().length()<=16 ) {
+                                    if (passwordValue.toString().length()==6){
+                                        for (int i=0;i<users.size();i++){
+                                            if(number.equals(users.get(i).getUserName().toString())&&passwordValue.equals(users.get(i).getPassword().toString())){
+
+                                                Intent intent_login = new Intent(Login_Activity.this, MainActivity.class);
+                                                intent_login.putExtra("id",users.get(i).getId());
+                                                Map<String, String> map = new HashMap<String, String>(); //本地保存数据
+                                                map.put("username",users.get(i).getUserName());
+                                                map.put("password",users.get(i).getPassword());
+                                                map.put("number",users.get(i).getNumber());
+                                                map.put("gender",users.get(i).getGender());
+                                                SaveUtils.saveSettingNote(Login_Activity.this, "userInfo",map);
+                                                startActivity(intent_login);
+                                            }
+                                        }
+
+                                    }else{
+                                        Toast.makeText(Login_Activity.this, "密码格式错误！", Toast.LENGTH_LONG).show();}
+                                }else{Toast.makeText(Login_Activity.this, "账号格式错误！", Toast.LENGTH_LONG).show();}
+
+                            }
+                        });
+
+                    }
+                }).start();
+
                 break;
         }
     }

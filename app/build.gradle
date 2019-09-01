@@ -29,4 +29,8 @@ dependencies {
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
     implementation 'com.ashokvarma.android:bottom-navigation-bar:2.1.0'
     implementation files('libs/gradle-wrapper.jar')
+    implementation files('libs/fastjson-1.2.54.jar')
+    implementation 'com.github.lecho:hellocharts-library:1.5.8@aar'
+
+
 }

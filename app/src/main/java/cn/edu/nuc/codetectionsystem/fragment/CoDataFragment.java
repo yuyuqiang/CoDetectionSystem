@@ -25,14 +25,7 @@ public class CoDataFragment extends BaseFragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.co_data_fragment,null);
 
-        view_btn = view.findViewById(R.id.view_btn);
-        view_btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent =new Intent(getContext(), ViewpageManage_Activity.class);
-                startActivity(intent);
-            }
-        });
+
 
         return view;
     }

@@ -24,7 +24,7 @@
             android:id="@+id/tv_nicheng"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text=" UserName"
+            android:text="用户名"
             android:textSize="17dp"
             android:textColor="#191717"
             android:layout_marginLeft="100dp"
