@@ -6,11 +6,16 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.HashMap;
 import java.util.List;
@@ -35,7 +40,8 @@ public class Login_Activity extends AppCompatActivity implements View.OnClickLis
     private String get;
     private List<User> users;
     private UserJson userJson;
-    private String number,passwordValue;
+    private String passwordValue;
+    private String number;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -108,40 +114,65 @@ public class Login_Activity extends AppCompatActivity implements View.OnClickLis
 
                         number = telephone.getText().toString();
                         passwordValue = password.getText().toString();
-                        String url = "http://47.94.19.124:8080/Winds/android/login?number="+ number +"&password="+passwordValue;
-                        get = GetPostUtil.sendGetRequest(url);
+                        Log.i("", "run: "+number+"password"+passwordValue);
+
+                        String url = "http://47.94.19.124:8080/Winds/android/login?";
+                        String data ="number="+number+"&password="+passwordValue;
+                        get = GetPostUtil.sendPostRequest(url,data);
 
                         runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-                                users = userJson.jsonTOObject(get);
-                                //判断信息是否符合
-                                if (number.toString().length()<=16 ) {
-                                    if (passwordValue.toString().length()==6){
-                                        for (int i=0;i<users.size();i++){
-                                            if(number.equals(users.get(i).getUserName().toString())&&passwordValue.equals(users.get(i).getPassword().toString())){
+                                //users = userJson.jsonTOObject(get);
+                                List<User> user;
+                                try {
 
-                                                Intent intent_login = new Intent(Login_Activity.this, MainActivity.class);
-                                                intent_login.putExtra("id",users.get(i).getId());
-                                                Map<String, String> map = new HashMap<String, String>(); //本地保存数据
-                                                map.put("username",users.get(i).getUserName());
-                                                map.put("password",users.get(i).getPassword());
-                                                map.put("number",users.get(i).getNumber());
-                                                map.put("gender",users.get(i).getGender());
-                                                SaveUtils.saveSettingNote(Login_Activity.this, "userInfo",map);
-                                                startActivity(intent_login);
+                                    UserJson userJson= null;
+                                    JSONObject jsonObject = new JSONObject(get);
+                                    JSONArray jsonArray1 = jsonObject.getJSONArray("data");
+
+                                    user = userJson.jsonTOObject(String.valueOf(jsonArray1));
+                                    users=user;
+                                            Log.e("", String.valueOf(users));
+                                            for (User i :users) {
+                                                Log.i("", "run: user " + i.getUserName());
                                             }
-                                        }
+                                    if (number.toString().length()<=16 ) {
+                                        if (passwordValue.toString().length()==6){
+                                            for (int i=0;i<user.size();i++){
+                                                if(number.equals(users.get(i).getNumber().toString())&&passwordValue.equals(users.get(i).getPassword().toString())){
 
-                                    }else{
-                                        Toast.makeText(Login_Activity.this, "密码格式错误！", Toast.LENGTH_LONG).show();}
-                                }else{Toast.makeText(Login_Activity.this, "账号格式错误！", Toast.LENGTH_LONG).show();}
+                                                    Intent intent_login = new Intent(Login_Activity.this, MainActivity.class);
+                                                    intent_login.putExtra("id",users.get(i).getId());
+                                                    Map<String, String> map = new HashMap<String, String>(); //本地保存数据
+                                                    map.put("username",users.get(i).getUserName());
+                                                    map.put("password",users.get(i).getPassword());
+                                                    map.put("number",users.get(i).getNumber());
+                                                    map.put("gender",users.get(i).getGender());
+                                                    SaveUtils.saveSettingNote(Login_Activity.this, "userInfo",map);
+                                                    Toast.makeText(Login_Activity.this, "登陆成功！", Toast.LENGTH_LONG).show();
+                                                    startActivity(intent_login);
+                                                }
+                                            }
+
+                                        }else{
+                                            Toast.makeText(Login_Activity.this, "密码格式错误！", Toast.LENGTH_LONG).show();}
+                                    }else{Toast.makeText(Login_Activity.this, "账号格式错误！", Toast.LENGTH_LONG).show();}
+//                                            }
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+                                //判断信息是否符合
+
 
                             }
                         });
 
                     }
                 }).start();
+
+
+
 
                 break;
         }

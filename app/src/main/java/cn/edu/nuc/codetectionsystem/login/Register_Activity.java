@@ -14,8 +14,18 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 
+import com.alibaba.fastjson.JSON;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.List;
+
 import cn.edu.nuc.codetectionsystem.MainActivity;
 import cn.edu.nuc.codetectionsystem.R;
+import cn.edu.nuc.codetectionsystem.models.User;
+import cn.edu.nuc.codetectionsystem.models.UserJson;
 import cn.edu.nuc.codetectionsystem.until.GetPostUtil;
 
 public class Register_Activity extends AppCompatActivity implements View.OnClickListener {
@@ -75,27 +85,40 @@ public class Register_Activity extends AppCompatActivity implements View.OnClick
                         setPositiveButton("确定", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-//                                new Thread(new Runnable() {
-//                                    @Override
-//                                    public void run() {
-//                                        String url = "http://192.168.137.1:8000/post_test/";
-//                                        data ="userName="+username_regist.getText().toString()+"&passord="+password_regist.getText().toString()+"&gender="+genderValue.toString()+"&number="+telephone_regist.getText().toString()+"";
-//                                        Log.e(TAG, "run: "+data );
-//                                        get = GetPostUtil.sendPostRequest(url,data);
-//
-//                                        runOnUiThread(new Runnable() {
-//                                            @Override
-//                                            public void run() {
-//                                                Intent intent_register = new Intent(Register_Activity.this, MainActivity.class);
-//                                                startActivity(intent_register);
-//
+                                new Thread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        String url = "http://47.94.19.124:8080/Winds/android/register?";
+                                        data ="userName="+username_regist.getText().toString()+"&password="+password_regist.getText().toString()+"&gender="+genderValue.toString()+"&number="+telephone_regist.getText().toString()+"";
+                                        Log.e(TAG, "run: "+data );
+                                        get = GetPostUtil.sendPostRequest(url,data);
+                                        Log.i("get:", get);
+                                        try {
+
+                                            UserJson userJson= null;
+                                            JSONObject jsonObject = new JSONObject(get);
+                                            JSONArray jsonArray1 = jsonObject.getJSONArray("data");
+                                            List<User> users;
+                                            users = userJson.jsonTOObject(String.valueOf(jsonArray1));
+//                                            Log.e("", String.valueOf(users));
+//                                            for (User i :users){
+//                                                Log.i(TAG, "run: user "+i.getUserName());
 //                                            }
-//                                        });
-//
-//                                    }
-//                                }).start();
-                                Intent intent_register = new Intent(Register_Activity.this, MainActivity.class);
-                                startActivity(intent_register);
+                                        } catch (JSONException e) {
+                                            e.printStackTrace();
+                                        }
+                                        runOnUiThread(new Runnable() {
+                                            @Override
+                                            public void run() {
+                                                Intent intent_register = new Intent(Register_Activity.this, MainActivity.class);
+                                                startActivity(intent_register);
+
+                                            }
+                                        });
+
+                                    }
+                                }).start();
+
 
                                     }
                         });

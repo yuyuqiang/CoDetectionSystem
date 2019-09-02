@@ -2,8 +2,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="cn.edu.nuc.codetectionsystem">
 
-    <permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.INTERNET"/>
+    <permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:allowBackup="true"
@@ -20,15 +21,13 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
         </activity>
-        <activity android:name=".MainActivity">
+        <activity android:name=".MainActivity"></activity>
+        <activity android:name=".login.Register_Activity" />
+        <activity android:name=".login.Login_Activity" />
+        <activity android:name=".viewpage.ViewpageManage_Activity" />
+        <activity android:name=".fragment.Car_ADD_Activity" />
 
-        </activity>
-        <activity android:name=".login.Register_Activity"></activity>
-        <activity android:name=".login.Login_Activity"></activity>
-        <activity android:name=".viewpage.ViewpageManage_Activity"></activity>
-        <activity android:name=".fragment.Car_ADD_Activity"></activity>
     </application>
 
 </manifest>
