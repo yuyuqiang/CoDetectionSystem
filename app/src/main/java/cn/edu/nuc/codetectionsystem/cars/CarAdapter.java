@@ -40,7 +40,13 @@ public class CarAdapter extends ArrayAdapter<Car> {
     private ImageView sensor2_iv;
     private TextView co_two_tv;
     private TextView danwei2;
-    public static TextView detail_tv;
+    //public static TextView detail_tv;
+
+    public void my_notify(Car car){
+        objects.add(car);
+        notifyDataSetChanged();
+
+    }
 
 
     public CarAdapter(@NonNull Context context, int resource, List<Car>objects) {
@@ -72,16 +78,16 @@ public class CarAdapter extends ArrayAdapter<Car> {
         co_two_tv = view.findViewById(R.id.co_two_tv);
         danwei1 =view.findViewById(R.id.danwei1);
         danwei2 = view.findViewById(R.id.danwei2);
-        detail_tv =view.findViewById(R.id.detail_tv);
-
-        detail_tv.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(getContext(),"ydfukfFffff",Toast.LENGTH_LONG).show();
-                Intent intent =new Intent(getContext(), ViewpageManage_Activity.class);
-                getContext().startActivity(intent);//请求码为0
-            }
-        });
+//        detail_tv =view.findViewById(R.id.detail_tv);
+//
+//        detail_tv.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Toast.makeText(getContext(),"ydfukfFffff",Toast.LENGTH_LONG).show();
+//                Intent intent =new Intent(getContext(), ViewpageManage_Activity.class);
+//                getContext().startActivity(intent);//请求码为0
+//            }
+//        });
 
         name_tv.setText(car.getName_tv());
         name1_tv.setText(car.getName1_tv());
@@ -94,7 +100,7 @@ public class CarAdapter extends ArrayAdapter<Car> {
         co_two_tv.setText(car.getCo_two_tv());
         danwei1.setText(car.getDanwei1());
         danwei2.setText(car.getDanwei2());
-        detail_tv.setText(car.getDetail_tv());
+        //detail_tv.setText(car.getDetail_tv());
 
         car_iv.setImageResource(car.getCar_iv());
         warn_iv.setImageResource(car.getWarn_iv());

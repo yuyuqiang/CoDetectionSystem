@@ -178,17 +178,17 @@
                 android:layout_marginTop="160dp"
                 android:textColor="#676464"
                 />
-            <TextView
-                android:id="@+id/detail_tv"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="详情"
-                android:textSize="16dp"
-                android:textColor="#058107"
-                android:layout_marginLeft="310dp"
-                android:layout_marginTop="145dp"
+            <!--<TextView-->
+                <!--android:id="@+id/detail_tv"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:text="详情"-->
+                <!--android:textSize="16dp"-->
+                <!--android:textColor="#058107"-->
+                <!--android:layout_marginLeft="310dp"-->
+                <!--android:layout_marginTop="145dp"-->
 
-                />
+                <!--/>-->
         </RelativeLayout>
 
 

@@ -21,7 +21,7 @@
             android:layout_marginTop="50dp"
             />
         <TextView
-            android:id="@+id/tv_nicheng"
+            android:id="@+id/name_mine"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="用户名"
@@ -32,7 +32,7 @@
             android:layout_gravity="center"
             />
         <TextView
-            android:id="@+id/phone_mine"
+
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text=" 电话号："
@@ -43,10 +43,9 @@
             android:layout_gravity="center"
             />
         <TextView
-            android:id="@+id/phone_number"
+            android:id="@+id/phone_mine"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:hint="110"
             android:textSize="15dp"
             android:textColor="#656363"
             android:layout_marginLeft="170dp"

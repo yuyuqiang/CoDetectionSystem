@@ -18,9 +18,8 @@ public class Car {
     private String co_two_tv;
     private String danwei1;
     private String danwei2;
-    private String detail_tv;
 
-    public Car(int car_iv, int warn_iv, String name_tv, String name1_tv, String phone_tv, String phone1_tv, String gender_tv, String gender1_tv, int license_iv, String license_tv, int sensor_iv1, int sensor_iv2, String co_one_tv, String co_two_tv, String danwei1, String danwei2,String detail_tv) {
+    public Car(int car_iv, int warn_iv, String name_tv, String name1_tv, String phone_tv, String phone1_tv, String gender_tv, String gender1_tv, int license_iv, String license_tv, int sensor_iv1, int sensor_iv2, String co_one_tv, String co_two_tv, String danwei1, String danwei2) {
         this.car_iv = car_iv;
         this.warn_iv = warn_iv;
         this.name_tv = name_tv;
@@ -37,7 +36,6 @@ public class Car {
         this.co_two_tv = co_two_tv;
         this.danwei1 = danwei1;
         this.danwei2 = danwei2;
-        this.detail_tv=detail_tv;
     }
 
     public int getCar_iv() {
@@ -168,11 +166,5 @@ public class Car {
         this.danwei2 = danwei2;
     }
 
-    public String getDetail_tv() {
-        return detail_tv;
-    }
 
-    public void setDetail_tv(String detail_tv) {
-        this.detail_tv = detail_tv;
-    }
 }
