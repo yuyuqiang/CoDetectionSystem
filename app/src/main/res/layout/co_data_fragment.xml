@@ -61,7 +61,7 @@
             android:layout_marginTop="10dp"
             android:layout_weight="1"
             android:gravity="center_horizontal"
-            android:text="CO浓度变化"
+            android:text="—CO浓度变化"
             android:textColor="#3d3a3a"
             android:textSize="14sp" />
 

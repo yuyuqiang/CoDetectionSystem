@@ -1,5 +1,6 @@
 package cn.edu.nuc.codetectionsystem.cars;
 
+import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -11,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.DatePicker;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -20,6 +22,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import cn.edu.nuc.codetectionsystem.MainActivity;
@@ -42,9 +45,7 @@ public class CarAdapter extends ArrayAdapter<Car> {
     private TextView name_tv;
     private TextView name1_tv;
     private TextView phone_tv;
-    private TextView phone1_tv;
-    private TextView gender_tv;
-    private TextView gender1_tv;
+    private TextView record_tv;
     private ImageView license_iv;
     private TextView license_tv;
     private ImageView sensor1_iv;
@@ -73,7 +74,7 @@ public class CarAdapter extends ArrayAdapter<Car> {
 
     @NonNull
     @Override
-    public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
+    public View getView(final int position, @Nullable View convertView, @NonNull ViewGroup parent) {
 
         final Car car = getItem(position);//获取当前的实例
         View view = LayoutInflater.from(getContext()).inflate(resourceId,parent,false);
@@ -83,9 +84,7 @@ public class CarAdapter extends ArrayAdapter<Car> {
         name_tv = view.findViewById(R.id.name_tv);
         name1_tv =view.findViewById(R.id.name_tv1);
         phone_tv = view.findViewById(R.id.phone_tv);
-        phone1_tv =view.findViewById(R.id.phone_tv1);
-        gender_tv = view.findViewById(R.id.gender_tv);
-        gender1_tv =view.findViewById(R.id.gender_tv1);
+        record_tv = view.findViewById(R.id.record_tv);
         license_iv = view.findViewById(R.id.license_iv);
         license_tv =view.findViewById(R.id.license_tv);
         sensor1_iv = view.findViewById(R.id.sensor1_iv);
@@ -112,7 +111,6 @@ public class CarAdapter extends ArrayAdapter<Car> {
                                     @Override
                                     public void run() {
                                         number = SaveUtils.getSettingNote(getContext(), "userInfo", "number");
-
                                         String url = "http://47.94.19.124:8080/Winds/car/delete?";
                                         data ="number="+number+"&license="+car.getLicense_tv()+"";
                                         Log.e("add", "run: "+data );
@@ -143,12 +141,30 @@ public class CarAdapter extends ArrayAdapter<Car> {
             }
         });
 
+        record_tv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Calendar calendar = Calendar.getInstance();
+                new DatePickerDialog(getContext(), DatePickerDialog.THEME_HOLO_LIGHT,
+                        new DatePickerDialog.OnDateSetListener() {
+                            @Override
+                            public void onDateSet(DatePicker datePicker, int i, int i1, int i2) {
+                                Log.e("hyu", "onDateSet: "+ i + "/" + (1 + i1) + "/" + i2);
+                                record_tv.setText(i + "/" + (1 + i1) + "/" + i2);
+                            }
+                        },
+                        calendar.get(Calendar.YEAR),
+                        calendar.get(Calendar.MONTH),
+                        calendar.get(Calendar.DAY_OF_MONTH)
+
+                ).show();
+            }
+        });
+
         name_tv.setText(car.getName_tv());
         name1_tv.setText(car.getName1_tv());
         phone_tv.setText(car.getPhone_tv());
-        phone1_tv.setText(car.getPhone1_tv());
-        gender_tv.setText(car.getGender_tv());
-        gender1_tv.setText(car.getGender1_tv());
+        record_tv.setText(car.getRecord_tv());
         license_tv.setText(car.getLicense_tv());
         co_one_tv.setText(car.getCo_one_tv());
         co_two_tv.setText(car.getCo_two_tv());

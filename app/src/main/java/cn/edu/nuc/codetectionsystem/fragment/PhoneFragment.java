@@ -3,6 +3,7 @@ package cn.edu.nuc.codetectionsystem.fragment;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -39,6 +40,9 @@ import cn.edu.nuc.codetectionsystem.until.SaveUtils;
 import cn.edu.nuc.codetectionsystem.viewpage.ViewpageManage_Activity;
 
 public class PhoneFragment extends BaseFragment {
+
+
+    Handler mHandler;
 
     private static List<Car> carList = new ArrayList<>();
     public static CarAdapter adapter;
@@ -93,9 +97,22 @@ public class PhoneFragment extends BaseFragment {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Car car = carList.get(position);
 
+
             }
         });
-        car_listview.setAdapter(adapter);
+
+        mHandler = new Handler() {
+            @Override
+            public void handleMessage(Message msg) {
+                super.handleMessage(msg);
+                switch (msg.what) {
+                    case 0:
+                        car_listview.setAdapter(adapter);
+                        break;
+                }
+            }
+        };
+
 
         car_add.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -198,9 +215,15 @@ public class PhoneFragment extends BaseFragment {
                         data_mg = cars.get(i).getData_mg();
 
                         Car car1 = new Car(R.drawable.theme3,R.drawable.ic_warn,"用户：",username_p,"电话:",
-                                number,"性别:",gender_p,R.drawable.ic_license,license,
+                                number,"查看记录",R.drawable.ic_license,license,
                                 R.drawable.ic_sensor,R.drawable.ic_sensor,"300","200","ppm","ppm",R.drawable.ic_delete);
                         carList.add(car1);
+                        Message message=new Message();
+                        message.what=0;
+                        Bundle bundle = new Bundle();
+                        bundle.putString("get",get);
+                        message.setData(bundle);
+                        mHandler.sendMessage(message);
                     }
 
                 } catch (JSONException e) {

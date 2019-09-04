@@ -9,8 +9,11 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import java.util.Collections;
 
 import cn.edu.nuc.codetectionsystem.R;
 import cn.edu.nuc.codetectionsystem.login.Login_Activity;
@@ -23,6 +26,7 @@ public class MineFragment extends Fragment {
     private String username_mine;
     private String telephone_mine;
     private LinearLayout exit=null;
+    private ImageView collect;
 
     @Nullable
     @Override
@@ -31,12 +35,22 @@ public class MineFragment extends Fragment {
         name_mine= view.findViewById(R.id.name_mine);
         phone_mine = view.findViewById(R.id.phone_mine);
         exit = view.findViewById(R.id.exit);
+        collect =view.findViewById(R.id.collect);
         init();
         exit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getContext(),Login_Activity.class);
                 startActivity(intent);
+            }
+        });
+
+        collect.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent1 = new Intent(getContext(), Collect_Activity.class);
+                startActivity(intent1);
+
             }
         });
 

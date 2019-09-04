@@ -8,8 +8,7 @@ public class Car {
     private String name1_tv;
     private String phone_tv;
     private String phone1_tv;
-    private String gender_tv;
-    private String gender1_tv;
+    private String record_tv;
     private int license_iv;
     private String license_tv;
     private int sensor_iv1;
@@ -20,15 +19,14 @@ public class Car {
     private String danwei2;
     private int delete_iv;
 
-    public Car(int car_iv, int warn_iv, String name_tv, String name1_tv, String phone_tv, String phone1_tv, String gender_tv, String gender1_tv, int license_iv, String license_tv, int sensor_iv1, int sensor_iv2, String co_one_tv, String co_two_tv, String danwei1, String danwei2,int delete_iv) {
+    public Car(int car_iv, int warn_iv, String name_tv, String name1_tv, String phone_tv, String phone1_tv,String record_tv, int license_iv, String license_tv, int sensor_iv1, int sensor_iv2, String co_one_tv, String co_two_tv, String danwei1, String danwei2,int delete_iv) {
         this.car_iv = car_iv;
         this.warn_iv = warn_iv;
         this.name_tv = name_tv;
         this.name1_tv = name1_tv;
         this.phone_tv = phone_tv;
         this.phone1_tv = phone1_tv;
-        this.gender_tv = gender_tv;
-        this.gender1_tv = gender1_tv;
+        this.record_tv = record_tv;
         this.license_iv = license_iv;
         this.license_tv = license_tv;
         this.sensor_iv1 = sensor_iv1;
@@ -86,22 +84,6 @@ public class Car {
 
     public void setPhone1_tv(String phone1_tv) {
         this.phone1_tv = phone1_tv;
-    }
-
-    public String getGender_tv() {
-        return gender_tv;
-    }
-
-    public void setGender_tv(String gender_tv) {
-        this.gender_tv = gender_tv;
-    }
-
-    public String getGender1_tv() {
-        return gender1_tv;
-    }
-
-    public void setGender1_tv(String gender1_tv) {
-        this.gender1_tv = gender1_tv;
     }
 
     public int getLicense_iv() {
@@ -174,5 +156,13 @@ public class Car {
 
     public void setDelete_iv(int delete_iv) {
         this.delete_iv = delete_iv;
+    }
+
+    public String getRecord_tv() {
+        return record_tv;
+    }
+
+    public void setRecord_tv(String record_tv) {
+        this.record_tv = record_tv;
     }
 }

@@ -83,23 +83,14 @@
                 android:layout_marginLeft="190dp"
                 />
             <TextView
-                android:id="@+id/gender_tv"
+                android:id="@+id/record_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="性别："
+                android:text="查看记录"
                 android:textSize="16dp"
                 android:layout_marginLeft="130dp"
                 android:layout_marginTop="85dp"
-                android:textColor="#676464"
-                />
-            <TextView
-                android:id="@+id/gender_tv1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="男"
-                android:textSize="16dp"
-                android:layout_marginTop="85dp"
-                android:layout_marginLeft="190dp"
+                android:textColor="#058107"
                 />
 
             <ImageView

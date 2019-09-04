@@ -103,12 +103,15 @@ public class CoDataFragment extends BaseFragment {
                             @Override
                             public void onValueSelected(Entry e, int dataSetIndex, Highlight h) {
 
-                                tv_shop.setText("汽车" + (e.getXIndex() + 1) + "CO浓度变化");
+
 
                                 LineChart chart = (LineChart) getActivity().findViewById(R.id.chart);
 
                                 switch (e.getXIndex()) {
                                     case 0:
+                                        for (int i=0;i<licenses.size();i++) {
+                                            tv_shop.setText(licenses.get(0).toString() + "-CO浓度变化");
+                                        }
                                         System.out.println("0  ");
                                         // 折线图
                                         lineCharts = new LineCharts(chart);
@@ -119,6 +122,9 @@ public class CoDataFragment extends BaseFragment {
                                         chart.setData(mLineData);
                                         break;
                                     case 1:
+                                        for (int i=0;i<licenses.size();i++) {
+                                            tv_shop.setText(licenses.get(1).toString() + "-CO浓度变化");
+                                        }
                                         System.out.println("1  ");
                                         lineCharts = new LineCharts(chart);
                                         // 制作7个数据点（沿x坐标轴）

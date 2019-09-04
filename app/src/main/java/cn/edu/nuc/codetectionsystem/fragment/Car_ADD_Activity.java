@@ -46,7 +46,7 @@ public class Car_ADD_Activity extends AppCompatActivity {
                 number_p = phone_add.getText().toString();
 
                 Car car = new Car(R.drawable.theme3,R.drawable.ic_warn,"用户：",username_p,"电话:",
-                        number_p,"性别:",gender_p,R.drawable.ic_license,license,
+                        number_p,"查看记录",R.drawable.ic_license,license,
                         R.drawable.ic_sensor,R.drawable.ic_sensor,"200","200","ppm","ppm",R.drawable.ic_delete);
 
                 new Thread(new Runnable() {
@@ -60,7 +60,7 @@ public class Car_ADD_Activity extends AppCompatActivity {
                         Log.i("get:", get);
 
                        final Car car = new Car(R.drawable.theme3,R.drawable.ic_warn,"用户：",username_p,"电话:",
-                                number_p,"性别:",gender_p,R.drawable.ic_license,license,
+                                number_p,"查看记录",R.drawable.ic_license,license,
                                 R.drawable.ic_sensor,R.drawable.ic_sensor,"200","200","ppm","ppm",R.drawable.ic_delete);
                         runOnUiThread(new Runnable() {
                             @Override
