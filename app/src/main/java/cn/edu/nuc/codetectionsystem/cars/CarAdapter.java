@@ -124,6 +124,8 @@ public class CarAdapter extends ArrayAdapter<Car> {
                                      //   Toast.makeText(getContext(),"删除成功",Toast.LENGTH_LONG).show();
                                     }
                                 }).start();
+                                 Toast.makeText(getContext(),"删除成功",Toast.LENGTH_LONG).show();
+
 
                             }
                         });
