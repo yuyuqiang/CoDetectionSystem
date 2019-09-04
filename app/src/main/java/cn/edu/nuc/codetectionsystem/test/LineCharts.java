@@ -1,6 +1,7 @@
 package cn.edu.nuc.codetectionsystem.test;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import android.graphics.Color;
 
@@ -70,54 +71,57 @@ public class LineCharts {
     }
 
     /**
-     * @param count
+     * @param first
      *            数据点的数量。
      * @return
      */
-    public LineData getLineData(int count) {
+    public LineData getLineData(List<Integer> first, List<Integer> second) {
         // ArrayList<String> x = new ArrayList<String>();
         // for (int i = 0; i < count; i++) {
         // // x轴显示的数据
         // x.add("周" + i);
         // }
 
+        int count = 25;
         // y轴的数据
         ArrayList<Entry> y_had = new ArrayList<Entry>();
         ArrayList<Entry> y_wait = new ArrayList<Entry>();
-        //ArrayList<Entry> y_yuqi = new ArrayList<Entry>();
-        for (int i = 0; i < count; i++) {
-            float val = (float) (Math.random() * 100);
-            Entry entry = new Entry(val, i);
+        int k = 0;
+        for (int i =0 ;i<first.size();i++){
+
+            Entry entry = new Entry(first.get(i), k++);
             y_had.add(entry);
+
         }
-        for (int i = 0; i < count; i++) {
-            float val = (float) (Math.random() * 100 - 10);
-            Entry entry = new Entry(val, i);
+        int l =0;
+        for (int j =0 ;j<second.size();j++){
+            Entry entry = new Entry(second.get(j), l++);
             y_wait.add(entry);
         }
-//        for (int i = 0; i < count; i++) {
-//            float val = (float) (Math.random() * 100 - 10);
-//            Entry entry = new Entry(val, i);
-//            y_yuqi.add(entry);
-//        }
+        System.out.println("y_had = "+y_had);
+        System.out.println("y_wait = "+y_wait);
+
+        System.out.println("y_had = "+y_had);
+        System.out.println("y_wait = "+y_wait);
+
 
         // y轴数据集
         LineDataSet mLineDataSet_had = new LineDataSet(y_had, "1号传感器");
         LineDataSet mLineDataSet_wait = new LineDataSet(y_wait, "2号传感器");
-       // LineDataSet mLineDataSet_yuqi = new LineDataSet(y_yuqi, "3号传感器");
+        // LineDataSet mLineDataSet_yuqi = new LineDataSet(y_yuqi, "3号传感器");
 
         // 折线的颜色
         mLineDataSet_had.setColor(Color.parseColor("#00C0BF"));
         mLineDataSet_wait.setColor(Color.parseColor("#F26077"));
-       // mLineDataSet_yuqi.setColor(Color.parseColor("#DEAD26"));
+        // mLineDataSet_yuqi.setColor(Color.parseColor("#DEAD26"));
         setLineStyle(mLineDataSet_had);
         setLineStyle(mLineDataSet_wait);
-       // setLineStyle(mLineDataSet_yuqi);
+        // setLineStyle(mLineDataSet_yuqi);
 
         ArrayList<LineDataSet> mLineDataSets = new ArrayList<LineDataSet>();
         mLineDataSets.add(mLineDataSet_had);
         mLineDataSets.add(mLineDataSet_wait);
-       // mLineDataSets.add(mLineDataSet_yuqi);
+        // mLineDataSets.add(mLineDataSet_yuqi);
 
         LineData mLineData = new LineData(getXAxisValues(), mLineDataSets);
 
@@ -176,30 +180,31 @@ public class LineCharts {
     public ArrayList<String> getXAxisValues() {
         ArrayList<String> xAxis = new ArrayList<String>();
         xAxis.add("00:00");
-        xAxis.add("01:00");
+//        xAxis.add("01:00");
         xAxis.add("02:00");
-        xAxis.add("03:00");
+//        xAxis.add("03:00");
         xAxis.add("04:00");
-        xAxis.add("05:00");
+//        xAxis.add("05:00");
         xAxis.add("06:00");
-        xAxis.add("07:00");
+//        xAxis.add("07:00");
         xAxis.add("08:00");
-        xAxis.add("09:00");
+//        xAxis.add("09:00");
         xAxis.add("10:00");
-        xAxis.add("11:00");
+//        xAxis.add("11:00");
         xAxis.add("12:00");
-        xAxis.add("13:00");
+//        xAxis.add("13:00");
         xAxis.add("14:00");
-        xAxis.add("15:00");
+//        xAxis.add("15:00");
         xAxis.add("16:00");
-        xAxis.add("17:00");
+//        xAxis.add("17:00");
         xAxis.add("18:00");
-        xAxis.add("19:00");
+//        xAxis.add("19:00");
         xAxis.add("20:00");
-        xAxis.add("21:00");
+//        xAxis.add("21:00");
         xAxis.add("22:00");
-        xAxis.add("23:00");
-        xAxis.add("24:00");
+//        xAxis.add("23:00");
+//        xAxis.add("24:00");
         return xAxis;
     }
+
 }

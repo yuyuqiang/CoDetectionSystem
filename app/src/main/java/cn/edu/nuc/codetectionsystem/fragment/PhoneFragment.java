@@ -1,18 +1,22 @@
 package cn.edu.nuc.codetectionsystem.fragment;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Message;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -39,17 +43,21 @@ public class PhoneFragment extends BaseFragment {
     private static List<Car> carList = new ArrayList<>();
     public static CarAdapter adapter;
     private ListView car_listview;
-    //private TextView detile_tv;
     private ImageButton car_add;
+    private ImageView warn;
+
     private String number,username_p,gender_p;
     private List<Cars> cars;
-
     private String get;
-
     private String license;
     private List<List<Integer>> data_mg;
-
     private SwipeRefreshLayout swipeRefreshLayout;
+    private TextView co_one_tv;
+    private TextView co_two_tv;
+    private TextWatcher one_watcher;
+    private TextWatcher two_watcher;
+
+    private Integer one_data,two_data;
 
 
     @Nullable
@@ -64,6 +72,9 @@ public class PhoneFragment extends BaseFragment {
         adapter = new CarAdapter(getContext(), R.layout.car_item, carList);
         car_listview = (ListView) view.findViewById(R.id.car_listview);
         car_add =(ImageButton)view.findViewById(R.id.car_add);
+        warn =(ImageView)view.findViewById(R.id.warn_iv);
+        co_one_tv=(TextView)view.findViewById(R.id.co_one_tv);
+        co_two_tv=(TextView)view.findViewById(R.id.co_two_tv);
 
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -74,10 +85,7 @@ public class PhoneFragment extends BaseFragment {
                 swipeRefreshLayout.setRefreshing(false);
             }
         });
-
         init();
-
-
 
 
         car_listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -97,8 +105,57 @@ public class PhoneFragment extends BaseFragment {
             }
         });
 
+        initWatcher();
 
         return view;
+    }
+
+    public void initWatcher() {
+        one_watcher = new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                one_data =Integer.parseInt(co_one_tv.getText().toString());
+                if(one_data>300){
+                    warn.setVisibility(View.VISIBLE);
+                    co_one_tv.setTextColor(Color.RED);
+                }
+
+
+            }
+        };
+
+        two_watcher = new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                two_data =Integer.parseInt(co_two_tv.getText().toString());
+                if(two_data>300){
+                    warn.setVisibility(View.VISIBLE);
+                    co_two_tv.setTextColor(Color.RED);
+                }
+
+            }
+        };
+
     }
 
     public static PhoneFragment newInstance(String param1) {
@@ -140,9 +197,9 @@ public class PhoneFragment extends BaseFragment {
                         license = cars.get(i).getLicense();
                         data_mg = cars.get(i).getData_mg();
 
-                        Car car1 = new Car(R.drawable.theme3,R.drawable.ic_warning,"用户：",username_p,"电话:",
-                                number,"性别:",gender_p,R.drawable.ic_license,"888",
-                                R.drawable.ic_sensor,R.drawable.ic_sensor,"200","200","ppm","ppm");
+                        Car car1 = new Car(R.drawable.theme3,R.drawable.ic_warn,"用户：",username_p,"电话:",
+                                number,"性别:",gender_p,R.drawable.ic_license,license,
+                                R.drawable.ic_sensor,R.drawable.ic_sensor,"300","200","ppm","ppm",R.drawable.ic_delete);
                         carList.add(car1);
                     }
 

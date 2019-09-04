@@ -1,5 +1,6 @@
 package cn.edu.nuc.codetectionsystem.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -8,9 +9,11 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import cn.edu.nuc.codetectionsystem.R;
+import cn.edu.nuc.codetectionsystem.login.Login_Activity;
 import cn.edu.nuc.codetectionsystem.until.SaveUtils;
 
 public class MineFragment extends Fragment {
@@ -19,6 +22,7 @@ public class MineFragment extends Fragment {
     private TextView phone_mine=null;
     private String username_mine;
     private String telephone_mine;
+    private LinearLayout exit=null;
 
     @Nullable
     @Override
@@ -26,7 +30,15 @@ public class MineFragment extends Fragment {
         View view = inflater.inflate(R.layout.mine_fragment,null);
         name_mine= view.findViewById(R.id.name_mine);
         phone_mine = view.findViewById(R.id.phone_mine);
+        exit = view.findViewById(R.id.exit);
         init();
+        exit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getContext(),Login_Activity.class);
+                startActivity(intent);
+            }
+        });
 
         return view;
     }

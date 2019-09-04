@@ -36,9 +36,10 @@
                 android:id="@+id/warn_iv"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="145dp"
                 android:layout_marginLeft="330dp"
-                android:background="@drawable/ic_warning"
+                android:background="@drawable/ic_warn"
+                android:visibility="invisible"
                 />
 
 
@@ -178,17 +179,15 @@
                 android:layout_marginTop="160dp"
                 android:textColor="#676464"
                 />
-            <!--<TextView-->
-                <!--android:id="@+id/detail_tv"-->
-                <!--android:layout_width="wrap_content"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:text="详情"-->
-                <!--android:textSize="16dp"-->
-                <!--android:textColor="#058107"-->
-                <!--android:layout_marginLeft="310dp"-->
-                <!--android:layout_marginTop="145dp"-->
+            <ImageView
+            android:id="@+id/delete_iv"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_marginLeft="345dp"
+            android:layout_marginTop="1dp"
+            android:src="@drawable/ic_delete"
 
-                <!--/>-->
+            />
         </RelativeLayout>
 
 

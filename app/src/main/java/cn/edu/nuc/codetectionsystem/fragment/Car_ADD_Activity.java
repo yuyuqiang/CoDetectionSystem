@@ -34,7 +34,7 @@ public class Car_ADD_Activity extends AppCompatActivity {
         phone_add = findViewById(R.id.phone_add);
 
         username_p = SaveUtils.getSettingNote(Car_ADD_Activity.this, "userInfo", "username");
-        number_p = SaveUtils.getSettingNote(Car_ADD_Activity.this, "userInfo", "number");
+       //  number_p = SaveUtils.getSettingNote(Car_ADD_Activity.this, "userInfo", "number");
         gender_p = SaveUtils.getSettingNote(Car_ADD_Activity.this, "userInfo", "gender");
 
 
@@ -43,10 +43,11 @@ public class Car_ADD_Activity extends AppCompatActivity {
             public void onClick(View v) {
 
                 license = license_add.getText().toString();
+                number_p = phone_add.getText().toString();
 
-                Car car = new Car(R.drawable.theme3,R.drawable.ic_warning,"用户：",username_p,"电话:",
+                Car car = new Car(R.drawable.theme3,R.drawable.ic_warn,"用户：",username_p,"电话:",
                         number_p,"性别:",gender_p,R.drawable.ic_license,license,
-                        R.drawable.ic_sensor,R.drawable.ic_sensor,"200","200","ppm","ppm");
+                        R.drawable.ic_sensor,R.drawable.ic_sensor,"200","200","ppm","ppm",R.drawable.ic_delete);
 
                 new Thread(new Runnable() {
                     @Override
@@ -58,9 +59,9 @@ public class Car_ADD_Activity extends AppCompatActivity {
                         get = GetPostUtil.sendPostRequest(url,data);
                         Log.i("get:", get);
 
-                       final Car car = new Car(R.drawable.theme3,R.drawable.ic_warning,"用户：",username_p,"电话:",
+                       final Car car = new Car(R.drawable.theme3,R.drawable.ic_warn,"用户：",username_p,"电话:",
                                 number_p,"性别:",gender_p,R.drawable.ic_license,license,
-                                R.drawable.ic_sensor,R.drawable.ic_sensor,"200","200","ppm","ppm");
+                                R.drawable.ic_sensor,R.drawable.ic_sensor,"200","200","ppm","ppm",R.drawable.ic_delete);
                         runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
@@ -68,7 +69,6 @@ public class Car_ADD_Activity extends AppCompatActivity {
                                 Log.e("car:", "onClick: "+car);
                             }
                         });
-
 
                     }
                 }).start();

@@ -6,6 +6,18 @@
     android:background="#FFFFFF"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="3dp"
+        android:gravity="center_horizontal"
+        android:text="CO平均浓度"
+        android:textColor="#3d3a3a"
+        android:textSize="14sp" />
+
+
     <com.github.mikephil.charting.charts.BarChart
         android:id="@+id/chart_bar"
         android:layout_width="match_parent"
@@ -19,7 +31,7 @@
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:background="#FFFFFF" />
+        android:background="#f0eded" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -36,8 +48,8 @@
             android:layout_gravity="left"
             android:layout_marginLeft="15dp"
             android:layout_marginTop="10dp"
-            android:text="(元)"
-            android:textColor="#FFFFFF" />
+            android:text="(ppm)"
+            android:textColor="#444040" />
 
         <TextView
             android:id="@+id/tv_shop"
@@ -49,8 +61,8 @@
             android:layout_marginTop="10dp"
             android:layout_weight="1"
             android:gravity="center_horizontal"
-            android:text="门店1近一周交易额"
-            android:textColor="#FFFFFF"
+            android:text="CO浓度变化"
+            android:textColor="#3d3a3a"
             android:textSize="14sp" />
 
         <TextView
@@ -60,9 +72,9 @@
             android:layout_gravity="right"
             android:layout_marginRight="15dp"
             android:layout_marginTop="10dp"
-            android:text="(元)"
-            android:textColor="#FFFFFF"
-            android:visibility="invisible" />
+            android:text="(ppm)"
+            android:textColor="#242222"
+            android:visibility="visible" />
     </LinearLayout>
 
     <com.github.mikephil.charting.charts.LineChart

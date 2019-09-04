@@ -59,9 +59,9 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationB
         bottomNavigationBar.setBackgroundStyle(BottomNavigationBar.BACKGROUND_STYLE_RIPPLE);
         //添加并设置图标、图标的颜色和文字
         bottomNavigationBar
-                .addItem(new BottomNavigationItem(R.drawable.ic_zhuce1, "Phone")).setActiveColor(R.color.colorWhite)
-                .addItem(new BottomNavigationItem(R.drawable.ic_zhuce1, "Co")).setActiveColor(R.color.colorWhite)
-                .addItem(new BottomNavigationItem(R.drawable.ic_wode1, "Mine")).setActiveColor(R.color.colorWhite)
+                .addItem(new BottomNavigationItem(R.drawable.ic_car, "车")).setActiveColor(R.color.colorWhite)
+                .addItem(new BottomNavigationItem(R.drawable.ic_map, "图表")).setActiveColor(R.color.colorWhite)
+                .addItem(new BottomNavigationItem(R.drawable.ic_wode1, "我 ")).setActiveColor(R.color.colorWhite)
                 .setFirstSelectedPosition(lastSelectedPosition )
                 .initialise();
         bottomNavigationBar.setTabSelectedListener(this);

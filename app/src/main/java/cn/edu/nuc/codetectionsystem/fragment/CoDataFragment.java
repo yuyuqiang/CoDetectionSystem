@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.charts.LineChart;
@@ -44,71 +45,116 @@ import cn.edu.nuc.codetectionsystem.until.SaveUtils;
 import static android.content.ContentValues.TAG;
 
 public class CoDataFragment extends BaseFragment {
-
-
     private BarChart3s mBarChart3s;
     private LineCharts lineCharts;
-    private static String get;
+    private  String get;
     String  date;
-    private static List<Cars> cars;
-    private String license;
-    private List<List<Integer>> data_mg;
-    public List<String> licenses = new ArrayList<>();
-    public  List<List<Integer>> data_mgs= new ArrayList<>();
-    //private  String a[]=new String[10];
+    private  List<Cars> cars;
+    private List<String> licenses = new ArrayList<>();
+    private List<List<Integer>> data_mgs= new ArrayList<>();
 
+    Handler mHandler;
+    private boolean mHasLoadedOnce;
+    private boolean isPrepared;
 
-
+    private TextView tv_shop;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        final View view = inflater.inflate(R.layout.co_data_fragment, null);
+
+        if (mView == null){
+            mView = inflater.inflate(R.layout.co_data_fragment, container, false);
+            isPrepared = true;
+
+//        实现懒加载
+            lazyLoad();
+        }
+        //缓存的mView需要判断是否已经被加过parent， 如果有parent需要从parent删除，要不然会发生这个mView已经有parent的错误。
+        ViewGroup parent = (ViewGroup) mView.getParent();
+        if (parent != null) {
+            parent.removeView(mView);
+        }
+
+        tv_shop = (TextView)mView.findViewById(R.id.tv_shop);
+
+        return mView;
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+
         SendRequest();
-//        init();
-        // 柱状图
-        BarChart chart_bar = (BarChart) view.findViewById(R.id.chart_bar);
-        mBarChart3s = new BarChart3s(chart_bar);
-        BarData data = new BarData(mBarChart3s.getXAxisValues(), mBarChart3s.getDataSet(licenses,data_mgs));
-        // 设置数据
-       chart_bar.setData(data);
-        chart_bar
-                .setOnChartValueSelectedListener(new OnChartValueSelectedListener() {
+        mHandler = new Handler(){
+            @Override
+            public void handleMessage(Message msg) {
+                super.handleMessage(msg);
+                switch (msg.what) {
+                    case 0:
+                        Log.i(TAG, "onActivityCreated: licenses"+licenses);
+                        Log.i(TAG, "onActivityCreated: licenses"+data_mgs);
+                        BarChart chart_bar = (BarChart) getActivity().findViewById(R.id.chart_bar);
+                        mBarChart3s = new BarChart3s(chart_bar);
+                        final BarData data = new BarData(mBarChart3s.getXAxisValues(licenses), mBarChart3s.getDataSet(licenses,data_mgs));
+                        // 设置数据
+                        chart_bar.setData(data);
+                        chart_bar.setOnChartValueSelectedListener(new OnChartValueSelectedListener() {
 
-                    @Override
-                    public void onValueSelected(Entry e, int dataSetIndex, Highlight h) {
-                        // ToastUtil.showToast(Activity_detail_gongdan.this,
-                        // "点击了~~" + e.getXIndex());
-                        // tv_shop.setText("门店" + (e.getXIndex() + 1) + "近一周交易额");
+                            @Override
+                            public void onValueSelected(Entry e, int dataSetIndex, Highlight h) {
 
-                        // 折线图
-                        LineChart chart = (LineChart) view.findViewById(R.id.chart);
+                                tv_shop.setText("汽车" + (e.getXIndex() + 1) + "CO浓度变化");
+
+                                LineChart chart = (LineChart) getActivity().findViewById(R.id.chart);
+
+                                switch (e.getXIndex()) {
+                                    case 0:
+                                        System.out.println("0  ");
+                                        // 折线图
+                                        lineCharts = new LineCharts(chart);
+                                        // 制作7个数据点（沿x坐标轴）
+                                        LineData mLineData = lineCharts.getLineData(data_mgs.get(0),data_mgs.get(1));
+                                        // setChartStyle(chart, mLineData, Color.WHITE);
+                                        // 设置x,y轴的数据
+                                        chart.setData(mLineData);
+                                        break;
+                                    case 1:
+                                        System.out.println("1  ");
+                                        lineCharts = new LineCharts(chart);
+                                        // 制作7个数据点（沿x坐标轴）
+                                        LineData mLineData1 = lineCharts.getLineData(data_mgs.get(2),data_mgs.get(3));
+                                        // setChartStyle(chart, mLineData, Color.WHITE);
+                                        // 设置x,y轴的数据
+                                        chart.setData(mLineData1);
+                                        break;
+                                    default:
+                                        break;
+                                }
+                            }
+                            @Override
+                            public void onNothingSelected() {
+                            }
+                        });
+//                         默认显示
+//                         折线图
+                        LineChart chart = (LineChart) getActivity().findViewById(R.id.chart);
                         lineCharts = new LineCharts(chart);
                         // 制作7个数据点（沿x坐标轴）
-                        LineData mLineData = lineCharts.getLineData(25);
+                        LineData mLineData = lineCharts.getLineData(data_mgs.get(0),data_mgs.get(1));
+
                         // setChartStyle(chart, mLineData, Color.WHITE);
                         // 设置x,y轴的数据
                         chart.setData(mLineData);
-                    }
+                        break;
+                    default:
+                        break;
+                }
+            }
 
-                    @Override
-                    public void onNothingSelected() {
-                    }
-                });
-
-        // 默认显示
-        // 折线图
-        LineChart chart = (LineChart) view.findViewById(R.id.chart);
-        lineCharts = new LineCharts(chart);
-        // 制作7个数据点（沿x坐标轴）
-        LineData mLineData = lineCharts.getLineData(25);
-        // setChartStyle(chart, mLineData, Color.WHITE);
-        // 设置x,y轴的数据
-        chart.setData(mLineData);
+        };
 
 
-        return view;
     }
-
 
     public  void SendRequest() {
         final String number = SaveUtils.getSettingNote(getContext(), "userInfo", "number");
@@ -131,7 +177,7 @@ public class CoDataFragment extends BaseFragment {
                 get = GetPostUtil.sendGetRequest(url);
                 Log.e("CO", "run: " + get);
                 Message message=new Message();
-                message.what=1;
+                message.what=2;
                 Bundle bundle = new Bundle();
                 bundle.putString("get",get);
                 message.setData(bundle);
@@ -140,12 +186,11 @@ public class CoDataFragment extends BaseFragment {
         }).start();
     }
 
-    @SuppressLint("HandlerLeak")
     Handler handler = new Handler() {
         public void handleMessage(final Message msg) {
             List<String> licenses_= new ArrayList<>();
             List<List<Integer>> data_mgs_ = new ArrayList<>();
-            if (msg.what == 1) {
+            if (msg.what == 2) {
                 String get = msg.getData().getString("get");
                 List<Cars> car;
                 try {
@@ -153,32 +198,26 @@ public class CoDataFragment extends BaseFragment {
                     JSONObject jsonObject = new JSONObject(get);
                     JSONArray jsonArray1 = jsonObject.getJSONArray("data");
                     car = carsJson.jsonTOObject(String.valueOf(jsonArray1));
-                    cars = car;
                     for (int i = 0; i < car.size(); i++) {
-                        license = cars.get(i).getLicense();
-                        data_mg = cars.get(i).getData_mg();
-                        licenses_.add(license);
-                        data_mgs_.addAll(data_mg);
-//                        licenses .addAll(licenses_);
-//                        data_mgs.addAll(data_mgs_);
+                        licenses_.add(car.get(i).getLicense());
+                        data_mgs_.addAll(car.get(i).getData_mg());
                     }
                     licenses = licenses_;
                     data_mgs = data_mgs_;
-            } catch (JSONException e) {
+
+                } catch (JSONException e) {
                     e.printStackTrace();
                 }
                 Log.i(TAG, "handleMessage: licenses"+licenses+"data_mgs"+data_mgs);
-//                for (List i : data_mgs){
-//                    Integer sum =0;
-//                    for(int j = 0;j<i.size();j++){
-//                        sum+=Integer.parseInt(String.valueOf(i.get(j)));
-//                        System.out.println(i.get(j));
-//                    }
-//                    System.out.println("sum"+sum/i.size());
-//                }
             }
+            Message message = new Message();
+            message.what = 0;
+            message.obj = "子线程发送的消息Hi~Hi";
+            mHandler .sendMessage(message);
+
         }
     };
+
     public static CoDataFragment newInstance(String param1) {
         CoDataFragment fragment = new CoDataFragment();
         Bundle args = new Bundle();
@@ -187,21 +226,16 @@ public class CoDataFragment extends BaseFragment {
         return fragment;
     }
 
-//    public ArrayList<String> getXAxisValues() {
-//
-//        ArrayList<String> xAxis = new ArrayList<String>();
-//        xAxis.add(licenses[0]);
-//        xAxis.add(licenses[1]);
-//        xAxis.add("车辆三");
-//        xAxis.add("车辆四");
-//        xAxis.add("车辆五");
-//        xAxis.add("车辆六");
-//        return xAxis;
-//    }
+
+
 
     @Override
     public void lazyLoad() {
-
+        if (!isPrepared || !isVisible || mHasLoadedOnce) {
+            return;
+        }
+        //填充各控件的数据
+        mHasLoadedOnce = true;
     }
 
     public void init(){
