@@ -141,16 +141,8 @@ public class CoDataFragment extends BaseFragment {
                             public void onNothingSelected() {
                             }
                         });
-//                         默认显示
-//                         折线图
-                        LineChart chart = (LineChart) getActivity().findViewById(R.id.chart);
-                        lineCharts = new LineCharts(chart);
-                        // 制作7个数据点（沿x坐标轴）
-                        LineData mLineData = lineCharts.getLineData(data_mgs.get(0),data_mgs.get(1));
+                        init1();//默认显示折线图
 
-                        // setChartStyle(chart, mLineData, Color.WHITE);
-                        // 设置x,y轴的数据
-                        chart.setData(mLineData);
                         break;
                     default:
                         break;
@@ -161,7 +153,19 @@ public class CoDataFragment extends BaseFragment {
 
 
     }
+   public void init1(){
+      // 默认显示
+    //   折线图
+       LineChart chart = (LineChart) getActivity().findViewById(R.id.chart);
+       lineCharts = new LineCharts(chart);
+       // 制作7个数据点（沿x坐标轴）
+       LineData mLineData = lineCharts.getLineData(data_mgs.get(0),data_mgs.get(1));
 
+       // setChartStyle(chart, mLineData, Color.WHITE);
+       // 设置x,y轴的数据
+       chart.setData(mLineData);
+
+   }
     public  void SendRequest() {
         final String number = SaveUtils.getSettingNote(getContext(), "userInfo", "number");
         Log.e(TAG, "SendRequest: " + number);
@@ -210,11 +214,14 @@ public class CoDataFragment extends BaseFragment {
                     }
                     licenses = licenses_;
                     data_mgs = data_mgs_;
+                    Dialog_self.init(data_mgs);
+                    //PhoneFragment.init2(data_mgs.get(0),data_mgs.get(1));
 
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
                 Log.i(TAG, "handleMessage: licenses"+licenses+"data_mgs"+data_mgs);
+
             }
             Message message = new Message();
             message.what = 0;

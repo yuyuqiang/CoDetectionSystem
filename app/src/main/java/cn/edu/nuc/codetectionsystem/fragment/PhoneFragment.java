@@ -1,5 +1,6 @@
 package cn.edu.nuc.codetectionsystem.fragment;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -63,6 +64,8 @@ public class PhoneFragment extends BaseFragment {
 
     private Integer one_data,two_data;
 
+    public static List<Integer> first,second;
+
 
     @Nullable
     @Override
@@ -96,6 +99,7 @@ public class PhoneFragment extends BaseFragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Car car = carList.get(position);
+
 
 
             }
@@ -186,6 +190,11 @@ public class PhoneFragment extends BaseFragment {
     @Override
     public void lazyLoad() {
 
+    }
+
+    public static void init2(List<Integer> first, List<Integer> second) {
+        first = first;
+        second = second;
     }
 
     private void init(){

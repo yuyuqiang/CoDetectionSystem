@@ -30,6 +30,7 @@
         <activity android:name=".fragment.Car_ADD_Activity" />
         <activity android:name=".fragment.Collect_Activity"></activity>
 
+
     </application>
 
 </manifest>
