@@ -228,7 +228,7 @@ public class CarAdapter extends ArrayAdapter<Car> {
         delete_iv.setImageResource(car.getDelete_iv());
 
         try {
-            if (Integer.valueOf(car.getCo_one_tv())>50){
+            if (Integer.valueOf(car.getCo_one_tv())>60){
                 co_one_tv.setTextColor(Color.RED);
                 warn_iv.setVisibility(View.VISIBLE);
             }
