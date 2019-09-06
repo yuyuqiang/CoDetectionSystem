@@ -4,6 +4,7 @@ import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
@@ -183,10 +184,11 @@ public class CarAdapter extends ArrayAdapter<Car> {
                             public void onDateSet(DatePicker datePicker, int i, int i1, int i2) {
                                 getItem(position).setRecord_tv(i + "/" + (1 + i1) + "/" + i2);
                                 record_tv.setText(getItem(position).getRecord_tv());
-                                TextView textView = null;
+                                //TextView textView = null;
                                 Dialog_self.Builder dialogBuild = new Dialog_self.Builder(getContext());
-                             //   textView.setText(i + "/" + (1 + i1) + "/" + i2+"CO浓度变化");
-                                Dialog_self dialog = dialogBuild.create();
+                                String station = i + "/" + (1 + i1) + "/" + i2+"CO浓度变化";
+                                //textView.setText(i + "/" + (1 + i1) + "/" + i2+"CO浓度变化");
+                                Dialog_self dialog = dialogBuild.create(position,station);
                                 dialog.setCanceledOnTouchOutside(true);// 点击外部区域关闭
                                 dialog.show();
 
@@ -210,6 +212,9 @@ public class CarAdapter extends ArrayAdapter<Car> {
         phone_tv.setText(car.getPhone1_tv());
         record_tv.setText(car.getRecord_tv());
         license_tv.setText(car.getLicense_tv());
+
+
+
         co_one_tv.setText(car.getCo_one_tv());
         co_two_tv.setText(car.getCo_two_tv());
         danwei1.setText(car.getDanwei1());
@@ -222,6 +227,29 @@ public class CarAdapter extends ArrayAdapter<Car> {
         sensor2_iv.setImageResource(car.getSensor_iv2());
         delete_iv.setImageResource(car.getDelete_iv());
 
+        try {
+            if (Integer.valueOf(car.getCo_one_tv())>50){
+                co_one_tv.setTextColor(Color.RED);
+                warn_iv.setVisibility(View.VISIBLE);
+            }
+
+            if (Integer.valueOf(car.getCo_two_tv())>50){
+                co_two_tv.setTextColor(Color.RED);
+                warn_iv.setVisibility(View.VISIBLE);
+            }
+        }catch (Exception e){
+
+        }
+
+
+//        void judgeOne(String s){
+//            if(Integer.valueOf(s)>300){
+//                warn_iv.setVisibility(View.VISIBLE);
+//                co_one_tv.setTextColor(Color.RED);
+//            }
+//        }
         return view;
     }
+
+
 }

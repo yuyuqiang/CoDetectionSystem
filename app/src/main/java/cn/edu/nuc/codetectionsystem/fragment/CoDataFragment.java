@@ -8,6 +8,7 @@ import android.os.Message;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.annotation.UiThread;
+import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -183,7 +184,7 @@ public class CoDataFragment extends BaseFragment {
 
             @Override
             public void run() {
-                String url = "http://47.94.19.124:8080/Winds/android/concentration?number=" + number + "&date=20190802";
+                String url = "http://47.94.19.124:8080/Winds/android/concentration?number=" + number + "&date="+date ;
                 get = GetPostUtil.sendGetRequest(url);
                 Log.e("CO", "run: " + get);
                 Message message=new Message();
@@ -257,5 +258,8 @@ public class CoDataFragment extends BaseFragment {
 
     }
 
+    public static Fragment instance(){
+        return new CoDataFragment();
+    }
 
 }

@@ -3,6 +3,7 @@ package cn.edu.nuc.codetectionsystem.fragment;
 import android.app.Dialog;
 import android.content.Context;
 import android.support.annotation.NonNull;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,6 +32,7 @@ public class Dialog_self extends Dialog {
 
     public static void init(List<List<Integer>> data_mgs0) {
         data_mgs = data_mgs0;
+        Log.d("Dialog_self123", "init:" + data_mgs);
     }
 
 
@@ -57,20 +59,21 @@ public class Dialog_self extends Dialog {
         }
 
 
-        public Dialog_self create() {
+        public Dialog_self create(int position,String station) {
           //  LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             final Dialog_self dialog = new Dialog_self(context, R.style.Dialog);
             View layout = LayoutInflater.from(context).inflate(R.layout.dialog_window, null);
 
             dialog.addContentView(layout, new ViewGroup.LayoutParams(
-                    ViewGroup.LayoutParams.MATCH_PARENT
-                    , ViewGroup.LayoutParams.MATCH_PARENT));
+                    400
+                    , 400));
             dialog.setContentView(layout);
             TextView dialog_tv =(TextView)layout.findViewById(R.id.dialog_tv);
             dialog_tv.setText(getTextView());
+            dialog_tv.setText(station);
             LineChart chart = (LineChart)layout.findViewById(R.id.line_chart);
             lineCharts = new LineCharts(chart);
-            LineData mLineData = lineCharts.getLineData(data_mgs.get(0),data_mgs.get(1));
+            LineData mLineData = lineCharts.getLineData(data_mgs.get(position*2),data_mgs.get(position*2+1));
             chart.setData(mLineData);
 
 

@@ -29,6 +29,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import cn.edu.nuc.codetectionsystem.R;
@@ -39,6 +40,8 @@ import cn.edu.nuc.codetectionsystem.models.CarsJson;
 import cn.edu.nuc.codetectionsystem.until.GetPostUtil;
 import cn.edu.nuc.codetectionsystem.until.SaveUtils;
 import cn.edu.nuc.codetectionsystem.viewpage.ViewpageManage_Activity;
+
+import static cn.edu.nuc.codetectionsystem.fragment.CoDataFragment.instance;
 
 public class PhoneFragment extends BaseFragment {
 
@@ -145,11 +148,7 @@ public class PhoneFragment extends BaseFragment {
 
             @Override
             public void afterTextChanged(Editable s) {
-                one_data =Integer.parseInt(co_one_tv.getText().toString());
-                if(one_data>300){
-                    warn.setVisibility(View.VISIBLE);
-                    co_one_tv.setTextColor(Color.RED);
-                }
+
 
 
             }
@@ -169,13 +168,17 @@ public class PhoneFragment extends BaseFragment {
             @Override
             public void afterTextChanged(Editable s) {
                 two_data =Integer.parseInt(co_two_tv.getText().toString());
-                if(two_data>300){
+                if(Integer.valueOf(two_data)>50){
                     warn.setVisibility(View.VISIBLE);
                     co_two_tv.setTextColor(Color.RED);
                 }
 
             }
         };
+
+    }
+    @Override
+    public void lazyLoad() {
 
     }
 
@@ -187,15 +190,6 @@ public class PhoneFragment extends BaseFragment {
         return fragment;
     }
 
-    @Override
-    public void lazyLoad() {
-
-    }
-
-    public static void init2(List<Integer> first, List<Integer> second) {
-        first = first;
-        second = second;
-    }
 
     private void init(){
 
@@ -203,11 +197,12 @@ public class PhoneFragment extends BaseFragment {
         number = SaveUtils.getSettingNote(getContext(), "userInfo", "number");
         gender_p = SaveUtils.getSettingNote(getContext(), "userInfo", "gender");
 
-
+        instance();
         new Thread(new Runnable() {
 
             @Override
             public void run() {
+                List<List<Integer>> data_mgs_ = new ArrayList<>();
                 String url = "http://47.94.19.124:8080/Winds/android/concentration?number=" + number + "&date=20190802";
                 get = GetPostUtil.sendGetRequest(url);
                 Log.e("CO", "run: " + get);
@@ -219,21 +214,26 @@ public class PhoneFragment extends BaseFragment {
                     car = carsJson.jsonTOObject(String.valueOf(jsonArray1));
                     cars = car;
                     carList.clear();
+
                     for (int i = 0; i < car.size(); i++) {
+                        data_mgs_.addAll(cars.get(i).getData_mg());
                         license = cars.get(i).getLicense();
                         data_mg = cars.get(i).getData_mg();
-
+                        Log.d("data_mg000:", "run: "+data_mg);
                         Car car1 = new Car(R.drawable.theme3,R.drawable.ic_warn,"用户：",username_p,"电话:",
                                 number,"查看记录",R.drawable.ic_license,license,
-                                R.drawable.ic_sensor,R.drawable.ic_sensor,"300","200","ppm","ppm",R.drawable.ic_delete);
+                                R.drawable.ic_sensor,R.drawable.ic_sensor,judgeDateOne(data_mg),judgeDateTwo(data_mg),"ppm","ppm",R.drawable.ic_delete);
                         carList.add(car1);
-                        Message message=new Message();
-                        message.what=0;
-                        Bundle bundle = new Bundle();
-                        bundle.putString("get",get);
-                        message.setData(bundle);
-                        mHandler.sendMessage(message);
+
                     }
+                    Dialog_self.init(data_mgs_);
+
+                    Message message=new Message();
+                    message.what=0;
+                    Bundle bundle = new Bundle();
+                    bundle.putString("get",get);
+                    message.setData(bundle);
+                    mHandler.sendMessage(message);
 
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -245,5 +245,123 @@ public class PhoneFragment extends BaseFragment {
 
     }
 
+    private String judgeDateOne(List<List<Integer>> date){
+        if (date.size()==0){
+            return "暂无";
+        }
+        int backtime = 1;
+        Calendar calendar = Calendar.getInstance();
+        int hour = calendar.get(Calendar.HOUR_OF_DAY);
+        Log.d("this time is ", "judgeDate: " +hour);
+        if (hour%2!=0){
+            hour = hour-1;
+        }
+        switch (hour){
+            case 0:
+                backtime = date.get(0).get(0);
+                break;
+            case 2:
+                backtime = date.get(0).get(1);
+                break;
+            case 4:
+                backtime = date.get(0).get(2);
+                break;
+            case 6:
+                backtime = date.get(0).get(3);
+                break;
+            case 8:
+                backtime = date.get(0).get(4);
+                break;
+            case 10:
+                backtime = date.get(0).get(5);
+                break;
+            case 12:
+                backtime = date.get(0).get(6);
+                break;
+            case 14:
+                backtime = date.get(0).get(7);
+                break;
+            case 16:
+                backtime = date.get(0).get(8);
+                break;
+            case 18:
+                backtime = date.get(0).get(9);
+                break;
+            case 20:
+                backtime = date.get(0).get(10);
+                break;
+            case 22:
+                backtime = date.get(0).get(11);
+                break;
+        }
+        return String.valueOf(backtime);
+////获取系统的日期
+////年
+//        int year = calendar.get(Calendar.YEAR);
+////月
+//        int month = calendar.get(Calendar.MONTH)+1;
+////日
+//        int day = calendar.get(Calendar.DAY_OF_MONTH);
+////获取系统时间
+////小时
+//        int hour = calendar.get(Calendar.HOUR_OF_DAY);
+////分钟
+//        int minute = calendar.get(Calendar.MINUTE);
+////秒
+//        int second = calendar.get(Calendar.SECOND);
+//
+//
+    }
 
+    private String judgeDateTwo(List<List<Integer>> date){
+        if (date.size()==0){
+            return "暂无";
+        }
+        int backtime = 1;
+        Calendar calendar = Calendar.getInstance();
+        int hour = calendar.get(Calendar.HOUR_OF_DAY);
+        Log.d("this time is ", "judgeDate: " +hour);
+        if (hour%2!=0){
+            hour = hour-1;
+        }
+        switch (hour){
+            case 0:
+                backtime = date.get(1).get(0);
+                break;
+            case 2:
+                backtime = date.get(1).get(1);
+                break;
+            case 4:
+                backtime = date.get(1).get(2);
+                break;
+            case 6:
+                backtime = date.get(1).get(3);
+                break;
+            case 8:
+                backtime = date.get(1).get(4);
+                break;
+            case 10:
+                backtime = date.get(1).get(5);
+                break;
+            case 12:
+                backtime = date.get(1).get(6);
+                break;
+            case 14:
+                backtime = date.get(1).get(7);
+                break;
+            case 16:
+                backtime = date.get(1).get(8);
+                break;
+            case 18:
+                backtime = date.get(1).get(9);
+                break;
+            case 20:
+                backtime = date.get(1).get(10);
+                break;
+            case 22:
+                backtime = date.get(1).get(11);
+                break;
+        }
+        return String.valueOf(backtime);
+    }
 }
