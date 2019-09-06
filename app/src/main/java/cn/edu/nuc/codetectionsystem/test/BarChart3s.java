@@ -1,18 +1,9 @@
 package cn.edu.nuc.codetectionsystem.test;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
-import android.annotation.SuppressLint;
 import android.graphics.Color;
-import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
-import android.os.PersistableBundle;
-import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
 import com.github.mikephil.charting.charts.BarChart;
@@ -22,12 +13,6 @@ import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.components.XAxis.XAxisPosition;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
-
-import cn.edu.nuc.codetectionsystem.fragment.CoDataFragment;
-import cn.edu.nuc.codetectionsystem.models.Cars;
-import cn.edu.nuc.codetectionsystem.until.GetPostUtil;
-
-import static android.content.ContentValues.TAG;
 
 /**
  * 柱状图
@@ -39,7 +24,8 @@ import static android.content.ContentValues.TAG;
 public class BarChart3s {
 
 
-//          System.out.println(df.format(new Date()));// new Date()为获取当前系统时间
+
+    //          System.out.println(df.format(new Date()));// new Date()为获取当前系统时间
 
 
     public BarChart3s(BarChart chart) {
@@ -72,11 +58,13 @@ public class BarChart3s {
         xAxis.setPosition(XAxisPosition.BOTTOM);
         xAxis.setDrawGridLines(false);
         xAxis.setSpaceBetweenLabels(2);//设置x轴label间隔
-
         chart.invalidate();
+
+
     }
 
     public ArrayList<BarDataSet> getDataSet(List<String> licenses, List<List<Integer>> data_mgs) {
+
         List<Integer> average = new ArrayList<>();
 
         for (List i : data_mgs) {
@@ -126,14 +114,21 @@ public class BarChart3s {
         return dataSets;
     }
 
-    public ArrayList<String> getXAxisValues() {
 
+
+    public ArrayList<String> getXAxisValues(List<String> licenses) {
+        //List<String> licenses= new ArrayList<>();
+        Log.e("5555", "getXAxisValues: "+licenses );
         ArrayList<String> xAxis = new ArrayList<String>();
-        xAxis.add("车辆一");
-        xAxis.add("车辆二");
+        for (int i=0;i<licenses.size();i++) {
+            xAxis.add(licenses.get(i));
+
+        }
+        System.out.println("license222"+licenses);
+
         return xAxis;
     }
 
-    private void init() {
-    }
+
+
 }

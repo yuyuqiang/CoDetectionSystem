@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.charts.LineChart;
@@ -32,7 +33,6 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
-import cn.edu.nuc.codetectionsystem.MainActivity;
 import cn.edu.nuc.codetectionsystem.R;
 import cn.edu.nuc.codetectionsystem.models.Cars;
 import cn.edu.nuc.codetectionsystem.models.CarsJson;
@@ -51,22 +51,19 @@ public class CoDataFragment extends BaseFragment {
     private  List<Cars> cars;
     private List<String> licenses = new ArrayList<>();
     private List<List<Integer>> data_mgs= new ArrayList<>();
-
     Handler mHandler;
     private boolean mHasLoadedOnce;
     private boolean isPrepared;
+
+    private TextView tv_shop;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-//        final View view = inflater.inflate(R.layout.co_data_fragment, null);
-////        SendRequest();
-////        init();
-//        // 柱状图
-//
-//        return view;
+
         if (mView == null){
             mView = inflater.inflate(R.layout.co_data_fragment, container, false);
             isPrepared = true;
+
 //        实现懒加载
             lazyLoad();
         }
@@ -75,6 +72,7 @@ public class CoDataFragment extends BaseFragment {
         if (parent != null) {
             parent.removeView(mView);
         }
+        tv_shop = (TextView)mView.findViewById(R.id.tv_shop);
 
         return mView;
     }
@@ -93,10 +91,13 @@ public class CoDataFragment extends BaseFragment {
                         Log.i(TAG, "onActivityCreated: licenses"+data_mgs);
                         BarChart chart_bar = (BarChart) getActivity().findViewById(R.id.chart_bar);
                         mBarChart3s = new BarChart3s(chart_bar);
-                        final BarData data = new BarData(mBarChart3s.getXAxisValues(), mBarChart3s.getDataSet(licenses,data_mgs));
+
+                        final BarData data = new BarData(mBarChart3s.getXAxisValues(licenses), mBarChart3s.getDataSet(licenses,data_mgs));
+
                         // 设置数据
                         chart_bar.setData(data);
                         chart_bar.setOnChartValueSelectedListener(new OnChartValueSelectedListener() {
+
 
                                     @Override
                                     public void onValueSelected(Entry e, int dataSetIndex, Highlight h) {
@@ -130,6 +131,7 @@ public class CoDataFragment extends BaseFragment {
                                     public void onNothingSelected() {
                                     }
                                 });
+
 //                         默认显示
 //                         折线图
                         LineChart chart = (LineChart) getActivity().findViewById(R.id.chart);
@@ -147,14 +149,10 @@ public class CoDataFragment extends BaseFragment {
             }
 
         };
-
-
     }
-
     public  void SendRequest() {
         final String number = SaveUtils.getSettingNote(getContext(), "userInfo", "number");
         Log.e(TAG, "SendRequest: " + number);
-
         SimpleDateFormat df = new SimpleDateFormat("yyyy");//设置日期格式
         String year = df.format(new Date());
         SimpleDateFormat df1 = new SimpleDateFormat("MM");//设置日期格式
@@ -201,7 +199,6 @@ public class CoDataFragment extends BaseFragment {
                     data_mgs = data_mgs_;
 
             } catch (JSONException e) {
-                    e.printStackTrace();
                 }
                 Log.i(TAG, "handleMessage: licenses"+licenses+"data_mgs"+data_mgs);
             }
@@ -221,17 +218,8 @@ public class CoDataFragment extends BaseFragment {
         return fragment;
     }
 
-//    public ArrayList<String> getXAxisValues() {
-//
-//        ArrayList<String> xAxis = new ArrayList<String>();
-//        xAxis.add(licenses[0]);
-//        xAxis.add(licenses[1]);
-//        xAxis.add("车辆三");
-//        xAxis.add("车辆四");
-//        xAxis.add("车辆五");
-//        xAxis.add("车辆六");
-//        return xAxis;
-//    }
+
+
 
     @Override
     public void lazyLoad() {

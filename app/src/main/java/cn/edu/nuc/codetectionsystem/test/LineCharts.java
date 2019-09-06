@@ -75,7 +75,10 @@ public class LineCharts {
      *            数据点的数量。
      * @return
      */
+
     public LineData getLineData(List<Integer> first,List<Integer> second) {
+
+
         // ArrayList<String> x = new ArrayList<String>();
         // for (int i = 0; i < count; i++) {
         // // x轴显示的数据
@@ -83,14 +86,18 @@ public class LineCharts {
         // }
 
             int count = 25;
+
         // y轴的数据
         ArrayList<Entry> y_had = new ArrayList<Entry>();
         ArrayList<Entry> y_wait = new ArrayList<Entry>();
         int k = 0;
         for (int i =0 ;i<first.size();i++){
 
+
                 Entry entry = new Entry(first.get(i), k++);
                 y_had.add(entry);
+
+
 
         }
         int l =0;
@@ -100,42 +107,28 @@ public class LineCharts {
         }
         System.out.println("y_had = "+y_had);
         System.out.println("y_wait = "+y_wait);
-        //ArrayList<Entry> y_yuqi = new ArrayList<Entry>();
-//        for (int i = 0; i < count; i++) {
-//            float val = (float) (Math.random() * 100);
-//            Entry entry = new Entry(val, i);
-//            y_had.add(entry);
-//        }
-//        for (int i = 0; i < count; i++) {
-//            float val = (float) (Math.random() * 100 - 10);
-//            Entry entry = new Entry(val, i);
-//            y_wait.add(entry);
-//        }
+
                 System.out.println("y_had = "+y_had);
         System.out.println("y_wait = "+y_wait);
-//        for (int i = 0; i < count; i++) {
-//            float val = (float) (Math.random() * 100 - 10);
-//            Entry entry = new Entry(val, i);
-//            y_yuqi.add(entry);
-//        }
+
 
         // y轴数据集
         LineDataSet mLineDataSet_had = new LineDataSet(y_had, "1号传感器");
         LineDataSet mLineDataSet_wait = new LineDataSet(y_wait, "2号传感器");
-       // LineDataSet mLineDataSet_yuqi = new LineDataSet(y_yuqi, "3号传感器");
+        // LineDataSet mLineDataSet_yuqi = new LineDataSet(y_yuqi, "3号传感器");
 
         // 折线的颜色
         mLineDataSet_had.setColor(Color.parseColor("#00C0BF"));
         mLineDataSet_wait.setColor(Color.parseColor("#F26077"));
-       // mLineDataSet_yuqi.setColor(Color.parseColor("#DEAD26"));
+        // mLineDataSet_yuqi.setColor(Color.parseColor("#DEAD26"));
         setLineStyle(mLineDataSet_had);
         setLineStyle(mLineDataSet_wait);
-       // setLineStyle(mLineDataSet_yuqi);
+        // setLineStyle(mLineDataSet_yuqi);
 
         ArrayList<LineDataSet> mLineDataSets = new ArrayList<LineDataSet>();
         mLineDataSets.add(mLineDataSet_had);
         mLineDataSets.add(mLineDataSet_wait);
-       // mLineDataSets.add(mLineDataSet_yuqi);
+        // mLineDataSets.add(mLineDataSet_yuqi);
 
         LineData mLineData = new LineData(getXAxisValues(), mLineDataSets);
 
@@ -220,4 +213,5 @@ public class LineCharts {
 //        xAxis.add("24:00");
         return xAxis;
     }
+
 }

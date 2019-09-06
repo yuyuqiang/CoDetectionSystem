@@ -28,6 +28,8 @@
         <activity android:name=".login.Login_Activity" />
         <activity android:name=".viewpage.ViewpageManage_Activity" />
         <activity android:name=".fragment.Car_ADD_Activity" />
+        <activity android:name=".fragment.Collect_Activity"></activity>
+        <activity android:name="MainActivity" />
 
     </application>
 

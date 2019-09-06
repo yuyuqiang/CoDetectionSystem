@@ -12,9 +12,8 @@
         app:cardCornerRadius="10dp"
         android:orientation="vertical"
         android:layout_marginBottom="3dp"
-
+        android:descendantFocusability="blocksDescendants"
         app:elevation="8dp"
-
         >
 
         <RelativeLayout
@@ -36,9 +35,10 @@
                 android:id="@+id/warn_iv"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="145dp"
                 android:layout_marginLeft="330dp"
-                android:background="@drawable/ic_warning"
+                android:background="@drawable/ic_warn"
+                android:visibility="invisible"
                 />
 
 
@@ -82,23 +82,16 @@
                 android:layout_marginLeft="190dp"
                 />
             <TextView
-                android:id="@+id/gender_tv"
+                android:id="@+id/record_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="性别："
+                android:text="查看记录"
+                android:clickable="true"
+                android:focusable="false"
                 android:textSize="16dp"
                 android:layout_marginLeft="130dp"
                 android:layout_marginTop="85dp"
-                android:textColor="#676464"
-                />
-            <TextView
-                android:id="@+id/gender_tv1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="男"
-                android:textSize="16dp"
-                android:layout_marginTop="85dp"
-                android:layout_marginLeft="190dp"
+                android:textColor="#058107"
                 />
 
             <ImageView
@@ -178,17 +171,15 @@
                 android:layout_marginTop="160dp"
                 android:textColor="#676464"
                 />
-            <TextView
-                android:id="@+id/detail_tv"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="详情"
-                android:textSize="16dp"
-                android:textColor="#058107"
-                android:layout_marginLeft="310dp"
-                android:layout_marginTop="145dp"
+            <ImageView
+            android:id="@+id/delete_iv"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_marginLeft="345dp"
+            android:layout_marginTop="1dp"
+            android:src="@drawable/ic_delete"
 
-                />
+            />
         </RelativeLayout>
 
 
