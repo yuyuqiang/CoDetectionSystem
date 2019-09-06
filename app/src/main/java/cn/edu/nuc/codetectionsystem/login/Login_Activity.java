@@ -120,7 +120,6 @@ public class Login_Activity extends AppCompatActivity implements View.OnClickLis
                         String url = "http://47.94.19.124:8080/Winds/android/login?";
                         String data ="number="+number+"&password="+passwordValue;
                         get = GetPostUtil.sendPostRequest(url,data);
-
                         runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
@@ -142,7 +141,6 @@ public class Login_Activity extends AppCompatActivity implements View.OnClickLis
                                         if (passwordValue.toString().length()==6){
                                             for (int i=0;i<user.size();i++){
                                                 if(number.equals(users.get(i).getNumber().toString())&&passwordValue.equals(users.get(i).getPassword().toString())){
-
                                                     Intent intent_login = new Intent(Login_Activity.this, MainActivity.class);
                                                     intent_login.putExtra("id",users.get(i).getId());
                                                     Map<String, String> map = new HashMap<String, String>(); //本地保存数据

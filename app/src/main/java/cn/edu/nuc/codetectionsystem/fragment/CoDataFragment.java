@@ -46,21 +46,42 @@ import static android.content.ContentValues.TAG;
 public class CoDataFragment extends BaseFragment {
     private BarChart3s mBarChart3s;
     private LineCharts lineCharts;
-    private  String get;
-    String  date;
-    private  List<Cars> cars;
+    private String get;
+    String date;
+    private List<Cars> cars;
     private List<String> licenses = new ArrayList<>();
-    private List<List<Integer>> data_mgs= new ArrayList<>();
+    private List<List<Integer>> data_mgs = new ArrayList<>();
     Handler mHandler;
     private boolean mHasLoadedOnce;
     private boolean isPrepared;
-
+    private static int index = 0;
     private TextView tv_shop;
+
+    public static  List<List<Integer>> get_data_mgs(List<String> licenses) {
+        List<Integer> list = null;
+        List<List<Integer>> preData =new ArrayList<>();
+        for (int j = 0;j <licenses.size();j++){
+            list = new ArrayList<Integer>();
+            for (int i = 0; i<12; i++) {
+                list.add(0);
+            }
+            preData.add(list);
+        }
+        return  preData;
+    }
+    public  static List<Integer> getOneList(){
+        List<Integer> list = new ArrayList<Integer>();
+        for (int i = 0; i<12; i++) {
+            list.add(0);
+        }
+        return  list;
+    }
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
-        if (mView == null){
+        if (mView == null) {
             mView = inflater.inflate(R.layout.co_data_fragment, container, false);
             isPrepared = true;
 
@@ -72,8 +93,7 @@ public class CoDataFragment extends BaseFragment {
         if (parent != null) {
             parent.removeView(mView);
         }
-        tv_shop = (TextView)mView.findViewById(R.id.tv_shop);
-
+        tv_shop = (TextView) mView.findViewById(R.id.tv_shop);
         return mView;
     }
 
@@ -81,63 +101,72 @@ public class CoDataFragment extends BaseFragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         SendRequest();
-        mHandler = new Handler(){
+        mHandler = new Handler() {
             @Override
             public void handleMessage(Message msg) {
                 super.handleMessage(msg);
                 switch (msg.what) {
                     case 0:
-                        Log.i(TAG, "onActivityCreated: licenses"+licenses);
-                        Log.i(TAG, "onActivityCreated: licenses"+data_mgs);
+                        Log.i(TAG, "onActivityCreated: licenses" + licenses);
+                        Log.i(TAG, "onActivityCreated: licenses" + data_mgs);
+                        for (int i = 0;i<data_mgs.size();i++){
+//                            if (data_mgs.get(i).size() ==  0){
+//                                data_mgs.remove(i);
+//                                data_mgs.add(i,getOneList());
+//                            }
+                            if(data_mgs.get(i).size()!= 12){
+                                for(int k = data_mgs.get(i).size();k<12;k++){
+                                    data_mgs.get(i).add(0);
+                                }
+                            }
+                            }
+                        System.out.println(data_mgs);
                         BarChart chart_bar = (BarChart) getActivity().findViewById(R.id.chart_bar);
                         mBarChart3s = new BarChart3s(chart_bar);
-
-                        final BarData data = new BarData(mBarChart3s.getXAxisValues(licenses), mBarChart3s.getDataSet(licenses,data_mgs));
-
+                        final BarData data = new BarData(mBarChart3s.getXAxisValues(licenses), mBarChart3s.getDataSet(licenses, data_mgs));
                         // 设置数据
                         chart_bar.setData(data);
                         chart_bar.setOnChartValueSelectedListener(new OnChartValueSelectedListener() {
+                            @Override
+                            public void onValueSelected(Entry e, int dataSetIndex, Highlight h) {
+                                LineChart chart = (LineChart) getActivity().findViewById(R.id.chart);
 
+                                switch (e.getXIndex()) {
+                                    case 0:
+                                        System.out.println("0  ");
+                                        // 折线图
+                                        lineCharts = new LineCharts(chart);
+                                        // 制作7个数据点（沿x坐标轴）
+                                        LineData mLineData = lineCharts.getLineData(data_mgs.get(index), data_mgs.get(index + 1));
+                                        // setChartStyle(chart, mLineData, Color.WHITE);
+                                        // 设置x,y轴的数据
+                                        chart.setData(mLineData);
+                                        break;
+                                    case 1:
+                                        System.out.println("1  ");
+                                        lineCharts = new LineCharts(chart);
+                                        // 制作7个数据点（沿x坐标轴）
+                                        LineData mLineData1 = lineCharts.getLineData(data_mgs.get(index + 2), data_mgs.get(3));
+                                        // setChartStyle(chart, mLineData, Color.WHITE);
+                                        // 设置x,y轴的数据
+                                        chart.setData(mLineData1);
+                                        break;
+                                    default:
+                                        break;
+                                }
+                            }
 
-                                    @Override
-                                    public void onValueSelected(Entry e, int dataSetIndex, Highlight h) {
-                                        LineChart chart = (LineChart) getActivity().findViewById(R.id.chart);
-
-                                        switch (e.getXIndex()) {
-                                            case 0:
-                                                System.out.println("0  ");
-                                                // 折线图
-                                                lineCharts = new LineCharts(chart);
-                                                // 制作7个数据点（沿x坐标轴）
-                                                LineData mLineData = lineCharts.getLineData(data_mgs.get(0),data_mgs.get(1));
-                                                // setChartStyle(chart, mLineData, Color.WHITE);
-                                                // 设置x,y轴的数据
-                                                chart.setData(mLineData);
-                                                break;
-                                            case 1:
-                                                System.out.println("1  ");
-                                                lineCharts = new LineCharts(chart);
-                                                // 制作7个数据点（沿x坐标轴）
-                                                LineData mLineData1 = lineCharts.getLineData(data_mgs.get(2),data_mgs.get(3));
-                                                // setChartStyle(chart, mLineData, Color.WHITE);
-                                                // 设置x,y轴的数据
-                                                chart.setData(mLineData1);
-                                                break;
-                                            default:
-                                                break;
-                                        }
-                                    }
-                                    @Override
-                                    public void onNothingSelected() {
-                                    }
-                                });
+                            @Override
+                            public void onNothingSelected() {
+                            }
+                        });
 
 //                         默认显示
 //                         折线图
                         LineChart chart = (LineChart) getActivity().findViewById(R.id.chart);
                         lineCharts = new LineCharts(chart);
                         // 制作7个数据点（沿x坐标轴）
-                        LineData mLineData = lineCharts.getLineData(data_mgs.get(0),data_mgs.get(1));
+                        LineData mLineData = lineCharts.getLineData(data_mgs.get(0), data_mgs.get(1));
 
                         // setChartStyle(chart, mLineData, Color.WHITE);
                         // 设置x,y轴的数据
@@ -150,7 +179,8 @@ public class CoDataFragment extends BaseFragment {
 
         };
     }
-    public  void SendRequest() {
+
+    public void SendRequest() {
         final String number = SaveUtils.getSettingNote(getContext(), "userInfo", "number");
         Log.e(TAG, "SendRequest: " + number);
         SimpleDateFormat df = new SimpleDateFormat("yyyy");//设置日期格式
@@ -158,21 +188,20 @@ public class CoDataFragment extends BaseFragment {
         SimpleDateFormat df1 = new SimpleDateFormat("MM");//设置日期格式
         String month = df1.format(new Date());
         SimpleDateFormat df2 = new SimpleDateFormat("dd");//设置日期格式
-        String day = df2.format(new Date());
-        date = year+month+day;
+        final String day = df2.format(new Date());
+        date = year + month + day;
         Log.e(TAG, "SendRequest: " + date);
-
         new Thread(new Runnable() {
 
             @Override
             public void run() {
-                String url = "http://47.94.19.124:8080/Winds/android/concentration?number=" + number + "&date=20190802";
+                String url = "http://47.94.19.124:8080/Winds/android/concentration?number=" + number + "&date="+date;
                 get = GetPostUtil.sendGetRequest(url);
                 Log.e("CO", "run: " + get);
-                Message message=new Message();
-                message.what=2;
+                Message message = new Message();
+                message.what = 2;
                 Bundle bundle = new Bundle();
-                bundle.putString("get",get);
+                bundle.putString("get", get);
                 message.setData(bundle);
                 handler.sendMessage(message);
             }
@@ -181,7 +210,7 @@ public class CoDataFragment extends BaseFragment {
 
     Handler handler = new Handler() {
         public void handleMessage(final Message msg) {
-            List<String> licenses_= new ArrayList<>();
+            List<String> licenses_ = new ArrayList<>();
             List<List<Integer>> data_mgs_ = new ArrayList<>();
             if (msg.what == 2) {
                 String get = msg.getData().getString("get");
@@ -198,14 +227,14 @@ public class CoDataFragment extends BaseFragment {
                     licenses = licenses_;
                     data_mgs = data_mgs_;
 
-            } catch (JSONException e) {
+                } catch (JSONException e) {
                 }
-                Log.i(TAG, "handleMessage: licenses"+licenses+"data_mgs"+data_mgs);
+                Log.i(TAG, "handleMessage: licenses" + licenses + "data_mgs" + data_mgs);
             }
             Message message = new Message();
             message.what = 0;
             message.obj = "子线程发送的消息Hi~Hi";
-            mHandler .sendMessage(message);
+            mHandler.sendMessage(message);
 
         }
     };
@@ -219,8 +248,6 @@ public class CoDataFragment extends BaseFragment {
     }
 
 
-
-
     @Override
     public void lazyLoad() {
         if (!isPrepared || !isVisible || mHasLoadedOnce) {
@@ -230,8 +257,8 @@ public class CoDataFragment extends BaseFragment {
         mHasLoadedOnce = true;
     }
 
-    public void init(){
-        Log.e(TAG, "init: "+licenses );
+    public void init() {
+        Log.e(TAG, "init: " + licenses);
 
 
     }
