@@ -23,12 +23,14 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".MainActivity"></activity>
+        <activity android:name=".MainActivity">
+        </activity>
         <activity android:name=".login.Register_Activity" />
         <activity android:name=".login.Login_Activity" />
         <activity android:name=".viewpage.ViewpageManage_Activity" />
         <activity android:name=".fragment.Car_ADD_Activity" />
         <activity android:name=".fragment.Collect_Activity"></activity>
+
 
     </application>
 

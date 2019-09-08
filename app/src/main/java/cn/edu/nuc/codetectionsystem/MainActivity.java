@@ -1,24 +1,18 @@
 package cn.edu.nuc.codetectionsystem;
 
-
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-
 import com.ashokvarma.bottomnavigation.BottomNavigationBar;
 import com.ashokvarma.bottomnavigation.BottomNavigationItem;
-
 import java.util.ArrayList;
-
 import cn.edu.nuc.codetectionsystem.R;
 import cn.edu.nuc.codetectionsystem.fragment.CoDataFragment;
 import cn.edu.nuc.codetectionsystem.fragment.MineFragment;
 import cn.edu.nuc.codetectionsystem.fragment.PhoneFragment;
-
-
 public class MainActivity extends AppCompatActivity implements BottomNavigationBar.OnTabSelectedListener{
 
     private ArrayList<Fragment> fragments;

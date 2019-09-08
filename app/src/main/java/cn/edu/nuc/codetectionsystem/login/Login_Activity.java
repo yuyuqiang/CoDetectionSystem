@@ -171,8 +171,6 @@ public class Login_Activity extends AppCompatActivity implements View.OnClickLis
                 }).start();
 
 
-
-
                 break;
         }
     }

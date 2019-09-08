@@ -100,10 +100,7 @@ public class Register_Activity extends AppCompatActivity implements View.OnClick
                                             JSONArray jsonArray1 = jsonObject.getJSONArray("data");
                                             List<User> users;
                                             users = userJson.jsonTOObject(String.valueOf(jsonArray1));
-//                                            Log.e("", String.valueOf(users));
-//                                            for (User i :users){
-//                                                Log.i(TAG, "run: user "+i.getUserName());
-//                                            }
+
                                         } catch (JSONException e) {
                                             e.printStackTrace();
                                         }
@@ -118,7 +115,6 @@ public class Register_Activity extends AppCompatActivity implements View.OnClick
 
                                     }
                                 }).start();
-
 
                                     }
                         });

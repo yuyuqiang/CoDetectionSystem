@@ -4,6 +4,7 @@ import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
@@ -17,6 +18,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.github.mikephil.charting.charts.LineChart;
+import com.github.mikephil.charting.data.LineData;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -27,9 +31,12 @@ import java.util.List;
 
 import cn.edu.nuc.codetectionsystem.MainActivity;
 import cn.edu.nuc.codetectionsystem.R;
+import cn.edu.nuc.codetectionsystem.fragment.CoDataFragment;
+import cn.edu.nuc.codetectionsystem.fragment.Dialog_self;
 import cn.edu.nuc.codetectionsystem.login.Register_Activity;
 import cn.edu.nuc.codetectionsystem.models.User;
 import cn.edu.nuc.codetectionsystem.models.UserJson;
+import cn.edu.nuc.codetectionsystem.test.LineCharts;
 import cn.edu.nuc.codetectionsystem.until.GetPostUtil;
 import cn.edu.nuc.codetectionsystem.until.SaveUtils;
 import cn.edu.nuc.codetectionsystem.viewpage.ViewpageManage_Activity;
@@ -37,33 +44,42 @@ import cn.edu.nuc.codetectionsystem.viewpage.ViewpageManage_Activity;
 public class CarAdapter extends ArrayAdapter<Car> {
 
     private int resourceId;
-    public static List<TextView> list= new ArrayList<>();
+    //public static List<TextView> list= new ArrayList<>();
     private List<Car> objects;
+    private  String number;
+    private  String data;
+    private  String get;
+    Car car;
 
-    private ImageView car_iv;
-    private ImageView warn_iv;
-    private TextView name_tv;
-    private TextView name1_tv;
-    private TextView phone_tv;
-
-    private ImageView license_iv;
-    private TextView license_tv;
-    private ImageView sensor1_iv;
-    private TextView co_one_tv;
-    private TextView danwei1;
-    private ImageView sensor2_iv;
-    private TextView co_two_tv;
-    private TextView danwei2;
-    public static ImageView delete_iv;
-    private String data;
-    private String get;
-    private String number;
 
     public void my_notify(Car car){
         objects.add(car);
         notifyDataSetChanged();
-
     }
+
+//    public void my_notify1(final Car car){
+//        record_tv.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                final Calendar calendar = Calendar.getInstance();
+//                new DatePickerDialog(getContext(), DatePickerDialog.THEME_HOLO_LIGHT,
+//                        new DatePickerDialog.OnDateSetListener() {
+//                            @Override
+//                            public void onDateSet(DatePicker datePicker, int i, int i1, int i2) {
+//                                Log.e("hyu", "onDateSet: "+ i + "/" + (1 + i1) + "/" + i2);
+//                               objects.get(car).setRecord_tv().setText(i + "/" + (1 + i1) + "/" + i2);
+//                            }
+//                        },
+//                        calendar.get(Calendar.YEAR),
+//                        calendar.get(Calendar.MONTH),
+//                        calendar.get(Calendar.DAY_OF_MONTH)
+//
+//                ).show();
+//            }
+//        });
+//
+//    }
+
 
 
     public CarAdapter(@NonNull Context context, int resource, List<Car>objects) {
@@ -75,16 +91,33 @@ public class CarAdapter extends ArrayAdapter<Car> {
     @NonNull
     @Override
     public View getView(final int position, @Nullable View convertView, @NonNull ViewGroup parent) {
+
         Log.d("ViewGroupparent", "getView: "+position);
         Log.d("ViewGroupparent", "resourceId: "+resourceId);
-        final Car car = getItem(position);//获取当前的实例
+        car = getItem(position);//获取当前的实例
         View view = LayoutInflater.from(getContext()).inflate(resourceId,parent,false);
         final TextView record_tv;
+        final ImageView car_iv;
+        final ImageView warn_iv;
+        final TextView name_tv;
+        final TextView name1_tv;
+        final TextView phone_tv;
+        final ImageView license_iv;
+        final TextView license_tv;
+        final ImageView sensor1_iv;
+        final TextView co_one_tv;
+        final TextView danwei1;
+        final ImageView sensor2_iv;
+        final TextView co_two_tv;
+        final TextView danwei2;
+        final  ImageView delete_iv;
+        final LineCharts lineCharts;
+
         car_iv = view.findViewById(R.id.car_iv);
         warn_iv =view.findViewById(R.id.warn_iv);
         name_tv = view.findViewById(R.id.name_tv);
         name1_tv =view.findViewById(R.id.name_tv1);
-        phone_tv = view.findViewById(R.id.phone_tv);
+        phone_tv = view.findViewById(R.id.phone_tv1);
         record_tv = view.findViewById(R.id.record_tv);
         license_iv = view.findViewById(R.id.license_iv);
         license_tv =view.findViewById(R.id.license_tv);
@@ -120,7 +153,7 @@ public class CarAdapter extends ArrayAdapter<Car> {
 
                                         Log.e("delete", "run: "+number+car.getLicense_tv() );
 
-                                     //   Toast.makeText(getContext(),"删除成功",Toast.LENGTH_LONG).show();
+
                                     }
                                 }).start();
                                  Toast.makeText(getContext(),"删除成功",Toast.LENGTH_LONG).show();
@@ -136,22 +169,30 @@ public class CarAdapter extends ArrayAdapter<Car> {
 
                     }
                 });
-
                 builder.create().show();
-
             }
         });
+
 
         record_tv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Calendar calendar = Calendar.getInstance();
+                final Calendar calendar = Calendar.getInstance();
                 new DatePickerDialog(getContext(), DatePickerDialog.THEME_HOLO_LIGHT,
                         new DatePickerDialog.OnDateSetListener() {
                             @Override
                             public void onDateSet(DatePicker datePicker, int i, int i1, int i2) {
-                                Log.e("hyu", "onDateSet: "+ i + "/" + (1 + i1) + "/" + i2);
-                                record_tv.setText(i + "/" + (1 + i1) + "/" + i2);
+                                getItem(position).setRecord_tv(i + "/" + (1 + i1) + "/" + i2);
+                                record_tv.setText(getItem(position).getRecord_tv());
+                                //TextView textView = null;
+                                Dialog_self.Builder dialogBuild = new Dialog_self.Builder(getContext());
+                                String station = i + "/" + (1 + i1) + "/" + i2+"CO浓度变化";
+                                //textView.setText(i + "/" + (1 + i1) + "/" + i2+"CO浓度变化");
+                                Dialog_self dialog = dialogBuild.create(position,station);
+                                dialog.setCanceledOnTouchOutside(true);// 点击外部区域关闭
+                                dialog.show();
+
+
                             }
                         },
                         calendar.get(Calendar.YEAR),
@@ -159,14 +200,21 @@ public class CarAdapter extends ArrayAdapter<Car> {
                         calendar.get(Calendar.DAY_OF_MONTH)
 
                 ).show();
+
+
             }
         });
 
+
+
         name_tv.setText(car.getName_tv());
         name1_tv.setText(car.getName1_tv());
-        phone_tv.setText(car.getPhone_tv());
+        phone_tv.setText(car.getPhone1_tv());
         record_tv.setText(car.getRecord_tv());
         license_tv.setText(car.getLicense_tv());
+
+
+
         co_one_tv.setText(car.getCo_one_tv());
         co_two_tv.setText(car.getCo_two_tv());
         danwei1.setText(car.getDanwei1());
@@ -178,6 +226,30 @@ public class CarAdapter extends ArrayAdapter<Car> {
         sensor1_iv.setImageResource(car.getSensor_iv1());
         sensor2_iv.setImageResource(car.getSensor_iv2());
         delete_iv.setImageResource(car.getDelete_iv());
+
+        try {
+            if (Integer.valueOf(car.getCo_one_tv())>50){
+                co_one_tv.setTextColor(Color.RED);
+                warn_iv.setVisibility(View.VISIBLE);
+            }
+
+            if (Integer.valueOf(car.getCo_two_tv())>50){
+                co_two_tv.setTextColor(Color.RED);
+                warn_iv.setVisibility(View.VISIBLE);
+            }
+        }catch (Exception e){
+
+        }
+
+
+//        void judgeOne(String s){
+//            if(Integer.valueOf(s)>300){
+//                warn_iv.setVisibility(View.VISIBLE);
+//                co_one_tv.setTextColor(Color.RED);
+//            }
+//        }
         return view;
     }
+
+
 }
