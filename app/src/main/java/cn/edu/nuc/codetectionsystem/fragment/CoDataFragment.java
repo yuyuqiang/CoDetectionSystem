@@ -94,13 +94,19 @@ public class CoDataFragment extends BaseFragment {
                     case 0:
                         Log.i(TAG, "onActivityCreated: licenses"+licenses);
                         Log.i(TAG, "onActivityCreated: licenses"+data_mgs);
+                        for (int j = 0;j<data_mgs.size();j++){
+                            if(data_mgs.get(j).size()!= 12){
+                                for(int k = data_mgs.get(j).size();k<12;k++){
+                                    data_mgs.get(j).add(0);
+                                }
+                            }
+                        }
                         BarChart chart_bar = (BarChart) getActivity().findViewById(R.id.chart_bar);
                         mBarChart3s = new BarChart3s(chart_bar);
                         final BarData data = new BarData(mBarChart3s.getXAxisValues(licenses), mBarChart3s.getDataSet(licenses,data_mgs));
                         // 设置数据
                         chart_bar.setData(data);
                         chart_bar.setOnChartValueSelectedListener(new OnChartValueSelectedListener() {
-
                             @Override
                             public void onValueSelected(Entry e, int dataSetIndex, Highlight h) {
 
@@ -213,6 +219,7 @@ public class CoDataFragment extends BaseFragment {
                         licenses_.add(car.get(i).getLicense());
                         data_mgs_.addAll(car.get(i).getData_mg());
                     }
+
                     licenses = licenses_;
                     data_mgs = data_mgs_;
                     Dialog_self.init(data_mgs);

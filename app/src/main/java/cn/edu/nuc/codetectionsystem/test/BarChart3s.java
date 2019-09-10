@@ -24,7 +24,6 @@ import com.github.mikephil.charting.data.BarEntry;
 public class BarChart3s {
 
 
-
     //          System.out.println(df.format(new Date()));// new Date()为获取当前系统时间
 
 
@@ -64,7 +63,6 @@ public class BarChart3s {
     }
 
     public ArrayList<BarDataSet> getDataSet(List<String> licenses, List<List<Integer>> data_mgs) {
-
         List<Integer> average = new ArrayList<>();
         for (List i : data_mgs) {
             Integer sum = 0;
@@ -73,21 +71,36 @@ public class BarChart3s {
             }
             average.add(sum / i.size());
         }
-        System.out.println("average"+average);
+        System.out.println("average" + average);
         ArrayList<BarEntry> valueSet3 = new ArrayList<BarEntry>();
         ArrayList<BarEntry> valueSet1 = new ArrayList<BarEntry>();
-        for(int j = 0;j<average.size();j++){
-            if (j>=2){
-                BarEntry v1e1 = new BarEntry(average.get(j), j%2); // Jan
-                valueSet1.add(v1e1);
-            }else {
-                BarEntry v3e1 = new BarEntry(average.get(j), j%2); // Jan
-                valueSet3.add(v3e1);
+        for (int j = 0; j < average.size(); j++) {
+//            if (j<2){
+//                BarEntry v1e1 = new BarEntry(average.get(j), j%2); // Jan
+//                valueSet1.add(v1e1);
+//            }else {
+//                BarEntry v3e1 = new BarEntry(average.get(j), j%2); // Jan
+//                valueSet3.add(v3e1);
+//            }
+            switch (j) {
+                case 0:
+                    BarEntry v1e1 = new BarEntry(average.get(0), 0); // Jan
+                    valueSet1.add(v1e1);
+                    BarEntry v3e12 = new BarEntry(average.get(1), 0); // Jan
+                    valueSet3.add(v3e12);
+                    break;
+                case 1:
+                    BarEntry v1e2 = new BarEntry(average.get(2), 1); // Jan
+                    valueSet1.add(v1e2);
+                    BarEntry v3e1 = new BarEntry(average.get(3), 1); // Jan
+                    valueSet3.add(v3e1);
+                    break;
+                default:
+                    break;
             }
         }
         ArrayList<BarDataSet> dataSets = null;
         ArrayList<BarEntry> valueSet2 = new ArrayList<BarEntry>();
-
         BarEntry v2e1 = new BarEntry(100.000f, 0); // Jan
         valueSet2.add(v2e1);
         BarEntry v2e2 = new BarEntry(100.000f, 1); // Feb
@@ -114,20 +127,18 @@ public class BarChart3s {
     }
 
 
-
     public ArrayList<String> getXAxisValues(List<String> licenses) {
         //List<String> licenses= new ArrayList<>();
-        Log.e("5555", "getXAxisValues: "+licenses );
+        Log.e("5555", "getXAxisValues: " + licenses);
         ArrayList<String> xAxis = new ArrayList<String>();
-        for (int i=0;i<licenses.size();i++) {
+        for (int i = 0; i < licenses.size(); i++) {
             xAxis.add(licenses.get(i));
 
         }
-        System.out.println("license222"+licenses);
+        System.out.println("license222" + licenses);
 
         return xAxis;
     }
-
 
 
 }

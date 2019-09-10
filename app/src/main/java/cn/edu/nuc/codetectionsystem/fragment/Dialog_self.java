@@ -62,6 +62,7 @@ public class Dialog_self extends Dialog {
         public Dialog_self create(int position,String station) {
           //  LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             final Dialog_self dialog = new Dialog_self(context, R.style.Dialog);
+            int index = 0;
             View layout = LayoutInflater.from(context).inflate(R.layout.dialog_window, null);
 
             dialog.addContentView(layout, new ViewGroup.LayoutParams(
@@ -73,7 +74,8 @@ public class Dialog_self extends Dialog {
             dialog_tv.setText(station);
             LineChart chart = (LineChart)layout.findViewById(R.id.line_chart);
             lineCharts = new LineCharts(chart);
-            LineData mLineData = lineCharts.getLineData(data_mgs.get(position*2),data_mgs.get(position*2+1));
+            System.out.println("position"+position);
+            LineData mLineData = lineCharts.getLineData(data_mgs.get(0),data_mgs.get(1));
             chart.setData(mLineData);
 
 

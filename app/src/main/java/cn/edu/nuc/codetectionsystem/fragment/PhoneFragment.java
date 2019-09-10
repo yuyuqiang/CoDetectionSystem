@@ -28,8 +28,10 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import cn.edu.nuc.codetectionsystem.R;
@@ -64,8 +66,10 @@ public class PhoneFragment extends BaseFragment {
     private TextView co_two_tv;
     private TextWatcher one_watcher;
     private TextWatcher two_watcher;
+    private List<String> licenses ;
 
     private Integer one_data,two_data;
+    String  date;
 
     public static List<Integer> first,second;
 
@@ -79,7 +83,7 @@ public class PhoneFragment extends BaseFragment {
 
        // init();
 
-        adapter = new CarAdapter(getContext(), R.layout.car_item, carList);
+//        adapter = new CarAdapter(getContext(), R.layout.car_item, carList);
         car_listview = (ListView) view.findViewById(R.id.car_listview);
         car_add =(ImageButton)view.findViewById(R.id.car_add);
         warn =(ImageView)view.findViewById(R.id.warn_iv);
@@ -107,13 +111,13 @@ public class PhoneFragment extends BaseFragment {
 
             }
         });
-
         mHandler = new Handler() {
             @Override
             public void handleMessage(Message msg) {
                 super.handleMessage(msg);
                 switch (msg.what) {
                     case 0:
+                        adapter = new CarAdapter(getContext(), R.layout.car_item, carList,licenses);
                         car_listview.setAdapter(adapter);
                         break;
                 }
@@ -196,17 +200,24 @@ public class PhoneFragment extends BaseFragment {
         username_p = SaveUtils.getSettingNote(getContext(), "userInfo", "username");
         number = SaveUtils.getSettingNote(getContext(), "userInfo", "number");
         gender_p = SaveUtils.getSettingNote(getContext(), "userInfo", "gender");
-
+        SimpleDateFormat df = new SimpleDateFormat("yyyy");//设置日期格式
+        String year = df.format(new Date());
+        SimpleDateFormat df1 = new SimpleDateFormat("MM");//设置日期格式
+        String month = df1.format(new Date());
+        SimpleDateFormat df2 = new SimpleDateFormat("dd");//设置日期格式
+        String day = df2.format(new Date());
+        date = year+month+day;
         instance();
         new Thread(new Runnable() {
 
             @Override
             public void run() {
                 List<List<Integer>> data_mgs_ = new ArrayList<>();
-                String url = "http://47.94.19.124:8080/Winds/android/concentration?number=" + number + "&date=20190802";
+                String url = "http://47.94.19.124:8080/Winds/android/concentration?number=" + number + "&date="+date;
                 get = GetPostUtil.sendGetRequest(url);
                 Log.e("CO", "run: " + get);
                 List<Cars> car;
+                List<String> licenses_ = new ArrayList<>();
                 try {
                     CarsJson carsJson = null;
                     JSONObject jsonObject = new JSONObject(get);
@@ -218,7 +229,17 @@ public class PhoneFragment extends BaseFragment {
                     for (int i = 0; i < car.size(); i++) {
                         data_mgs_.addAll(cars.get(i).getData_mg());
                         license = cars.get(i).getLicense();
+                        licenses_.add(license);
                         data_mg = cars.get(i).getData_mg();
+
+                        for (int j = 0;j<data_mg.size();j++){
+                            if(data_mg.get(j).size()!= 12){
+                                for(int k = data_mg.get(j).size();k<12;k++){
+                                    data_mg.get(j).add(0);
+                                }
+                            }
+                        }
+                        licenses = licenses_;
                         Log.d("data_mg000:", "run: "+data_mg);
                         Car car1 = new Car(R.drawable.theme3,R.drawable.ic_warn,"用户：",username_p,"电话:",
                                 number,"查看记录",R.drawable.ic_license,license,
