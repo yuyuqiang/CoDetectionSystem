@@ -73,7 +73,11 @@ public class BarChart3s {
                 }
                 sum += Integer.parseInt(String.valueOf(i.get(j)));
             }
-            average.add(sum / size);
+            if (size ==0){
+                average.add(0);
+            }else {
+                average.add(sum / size);
+            }
         }
         System.out.println("average" + average);
         ArrayList<BarEntry> valueSet3 = new ArrayList<BarEntry>();

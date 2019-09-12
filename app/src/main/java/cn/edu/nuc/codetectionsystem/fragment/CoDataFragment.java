@@ -94,13 +94,15 @@ public class CoDataFragment extends BaseFragment {
                     case 0:
                         Log.i(TAG, "onActivityCreated: licenses"+licenses);
                         Log.i(TAG, "onActivityCreated: licenses"+data_mgs);
+
                         for (int j = 0;j<data_mgs.size();j++){
-                            if(data_mgs.get(j).size()!= 12){
+                            if(data_mgs.get(j).size()< 12){
                                 for(int k = data_mgs.get(j).size();k<12;k++){
                                     data_mgs.get(j).add(0);
                                 }
                             }
                         }
+                        System.out.println("test"+data_mgs);
                         BarChart chart_bar = (BarChart) getActivity().findViewById(R.id.chart_bar);
                         mBarChart3s = new BarChart3s(chart_bar);
                         final BarData data = new BarData(mBarChart3s.getXAxisValues(licenses), mBarChart3s.getDataSet(licenses,data_mgs));
