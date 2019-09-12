@@ -209,7 +209,6 @@ public class PhoneFragment extends BaseFragment {
         date = year+month+day;
         instance();
         new Thread(new Runnable() {
-
             @Override
             public void run() {
                 List<List<Integer>> data_mgs_ = new ArrayList<>();

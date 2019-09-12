@@ -237,12 +237,7 @@ public class CarAdapter extends ArrayAdapter<Car> {
                                         }
                                     }
                                 };
-//                                Dialog_self.Builder dialogBuild = new Dialog_self.Builder(getContext());
-//                                String station = i + "/" + (1 + i1) + "/" + i2+"CO浓度变化";
-//                                Dialog_self.init(data_mgs_date);
-//                                Dialog_self dialog = dialogBuild.create(position,station);
-//                                dialog.setCanceledOnTouchOutside(true);// 点击外部区域关闭
-//                                dialog.show();
+
                             }
                         },
                         calendar.get(Calendar.YEAR),
@@ -276,12 +271,12 @@ public class CarAdapter extends ArrayAdapter<Car> {
         delete_iv.setImageResource(car.getDelete_iv());
 
         try {
-            if (Integer.valueOf(car.getCo_one_tv()) > 60) {
+            if (Integer.valueOf(car.getCo_one_tv()) > 80) {
                 co_one_tv.setTextColor(Color.RED);
                 warn_iv.setVisibility(View.VISIBLE);
             }
 
-            if (Integer.valueOf(car.getCo_two_tv()) > 50) {
+            if (Integer.valueOf(car.getCo_two_tv()) > 80) {
                 co_two_tv.setTextColor(Color.RED);
                 warn_iv.setVisibility(View.VISIBLE);
             }

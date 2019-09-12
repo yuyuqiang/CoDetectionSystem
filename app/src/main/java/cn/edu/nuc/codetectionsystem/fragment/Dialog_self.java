@@ -79,10 +79,6 @@ public class Dialog_self extends Dialog {
             chart.setData(mLineData);
 
 
-
-
-
-
 //            CoDataFragment coDataFragment = new CoDataFragment();
 //            coDataFragment.init1();
             return dialog;

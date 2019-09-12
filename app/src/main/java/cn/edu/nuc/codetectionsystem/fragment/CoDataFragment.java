@@ -110,8 +110,6 @@ public class CoDataFragment extends BaseFragment {
                             @Override
                             public void onValueSelected(Entry e, int dataSetIndex, Highlight h) {
 
-
-
                                 LineChart chart = (LineChart) getActivity().findViewById(R.id.chart);
 
                                 switch (e.getXIndex()) {

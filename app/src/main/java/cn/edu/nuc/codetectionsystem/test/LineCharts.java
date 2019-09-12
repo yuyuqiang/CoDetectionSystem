@@ -29,7 +29,7 @@ public class LineCharts {
     public LineCharts(LineChart mLineChart) {
         // 是否在折线图上添加边框
         mLineChart.setDrawBorders(false);
-        mLineChart.setDescription("（mg/m³）");// 数据描述
+        mLineChart.setDescription("（ppm）");// 数据描述
         // 如果没有数据的时候，会显示这个，类似listview的emtpyview
         mLineChart.setNoDataTextDescription("暂无数据");
         // 是否绘制背景颜色。
@@ -72,55 +72,50 @@ public class LineCharts {
 
     /**
      * @param first
-     *            数据点的数量。
+     *            设置折线图的数据
      * @return
      */
     public LineData getLineData(List<Integer> first, List<Integer> second) {
-        // ArrayList<String> x = new ArrayList<String>();
-        // for (int i = 0; i < count; i++) {
-        // // x轴显示的数据
-        // x.add("周" + i);
-        // }
 
-        int count = 25;
+        //int count = 25;
         // y轴的数据
-        ArrayList<Entry> y_had = new ArrayList<Entry>();
-        ArrayList<Entry> y_wait = new ArrayList<Entry>();
+        ArrayList<Entry> sensor_1 = new ArrayList<Entry>();
+        ArrayList<Entry> sensor_2 = new ArrayList<Entry>();
         int k = 0;
         for (int i =0 ;i<first.size();i++){
 
             Entry entry = new Entry(first.get(i), k++);
-            y_had.add(entry);
+            sensor_1.add(entry);
 
         }
         int l =0;
         for (int j =0 ;j<second.size();j++){
             Entry entry = new Entry(second.get(j), l++);
-            y_wait.add(entry);
+            sensor_2.add(entry);
         }
-        System.out.println("y_had = "+y_had);
-        System.out.println("y_wait = "+y_wait);
+        System.out.println("sensor_1 = "+sensor_1);
+        System.out.println("sensor_2 = "+sensor_2);
 
-        System.out.println("y_had = "+y_had);
-        System.out.println("y_wait = "+y_wait);
+        System.out.println("sensor_1 = "+sensor_1);
+        System.out.println("sensor_2 = "+sensor_2);
 
 
         // y轴数据集
-        LineDataSet mLineDataSet_had = new LineDataSet(y_had, "1号传感器");
-        LineDataSet mLineDataSet_wait = new LineDataSet(y_wait, "2号传感器");
+        LineDataSet mLineDataSet_1 = new LineDataSet(sensor_1, "1号传感器");
+        LineDataSet mLineDataSet_2 = new LineDataSet(sensor_2, "2号传感器");
         // LineDataSet mLineDataSet_yuqi = new LineDataSet(y_yuqi, "3号传感器");
 
         // 折线的颜色
-        mLineDataSet_had.setColor(Color.parseColor("#00C0BF"));
-        mLineDataSet_wait.setColor(Color.parseColor("#F26077"));
+        mLineDataSet_1.setColor(Color.parseColor("#00C0BF"));
+        mLineDataSet_2.setColor(Color.parseColor("#F26077"));
         // mLineDataSet_yuqi.setColor(Color.parseColor("#DEAD26"));
-        setLineStyle(mLineDataSet_had);
-        setLineStyle(mLineDataSet_wait);
+        setLineStyle(mLineDataSet_1);
+        setLineStyle(mLineDataSet_2);
         // setLineStyle(mLineDataSet_yuqi);
 
         ArrayList<LineDataSet> mLineDataSets = new ArrayList<LineDataSet>();
-        mLineDataSets.add(mLineDataSet_had);
-        mLineDataSets.add(mLineDataSet_wait);
+        mLineDataSets.add(mLineDataSet_1);
+        mLineDataSets.add(mLineDataSet_2);
         // mLineDataSets.add(mLineDataSet_yuqi);
 
         LineData mLineData = new LineData(getXAxisValues(), mLineDataSets);

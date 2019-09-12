@@ -66,33 +66,32 @@ public class BarChart3s {
         List<Integer> average = new ArrayList<>();
         for (List i : data_mgs) {
             Integer sum = 0;
+            int size = 0;
             for (int j = 0; j < i.size(); j++) {
+                if (!i.get(j).equals(0)){
+                    size++;
+                }
                 sum += Integer.parseInt(String.valueOf(i.get(j)));
             }
-            average.add(sum / i.size());
+            average.add(sum / size);
         }
         System.out.println("average" + average);
         ArrayList<BarEntry> valueSet3 = new ArrayList<BarEntry>();
         ArrayList<BarEntry> valueSet1 = new ArrayList<BarEntry>();
         for (int j = 0; j < average.size(); j++) {
-//            if (j<2){
-//                BarEntry v1e1 = new BarEntry(average.get(j), j%2); // Jan
-//                valueSet1.add(v1e1);
-//            }else {
-//                BarEntry v3e1 = new BarEntry(average.get(j), j%2); // Jan
-//                valueSet3.add(v3e1);
-//            }
             switch (j) {
+                //第一辆车
                 case 0:
-                    BarEntry v1e1 = new BarEntry(average.get(0), 0); // Jan
+                    BarEntry v1e1 = new BarEntry(average.get(0), 0); //绿
                     valueSet1.add(v1e1);
-                    BarEntry v3e12 = new BarEntry(average.get(1), 0); // Jan
+                    BarEntry v3e12 = new BarEntry(average.get(1), 0);//红
                     valueSet3.add(v3e12);
                     break;
+                    //第二辆车
                 case 1:
-                    BarEntry v1e2 = new BarEntry(average.get(2), 1); // Jan
+                    BarEntry v1e2 = new BarEntry(average.get(2), 1); //绿
                     valueSet1.add(v1e2);
-                    BarEntry v3e1 = new BarEntry(average.get(3), 1); // Jan
+                    BarEntry v3e1 = new BarEntry(average.get(3), 1); //红
                     valueSet3.add(v3e1);
                     break;
                 default:
@@ -101,12 +100,12 @@ public class BarChart3s {
         }
         ArrayList<BarDataSet> dataSets = null;
         ArrayList<BarEntry> valueSet2 = new ArrayList<BarEntry>();
-        BarEntry v2e1 = new BarEntry(100.000f, 0); // Jan
+        BarEntry v2e1 = new BarEntry(100.000f, 0); // 1
         valueSet2.add(v2e1);
-        BarEntry v2e2 = new BarEntry(100.000f, 1); // Feb
+        BarEntry v2e2 = new BarEntry(100.000f, 1); // 2
         valueSet2.add(v2e2);
 
-        BarDataSet barDataSet1 = new BarDataSet(valueSet1, "传感器（1）");
+        BarDataSet barDataSet1 = new BarDataSet(valueSet1, "1号传感器");
         barDataSet1.setColor(Color.parseColor("#00C0BF"));
         barDataSet1.setBarShadowColor(Color.parseColor("#01000000"));
 
@@ -114,7 +113,7 @@ public class BarChart3s {
         barDataSet2.setColor(Color.parseColor("#DEAD26"));
         barDataSet2.setBarShadowColor(Color.parseColor("#01000000"));
 
-        BarDataSet barDataSet3 = new BarDataSet(valueSet3, "传感器（2）");
+        BarDataSet barDataSet3 = new BarDataSet(valueSet3, "2号传感器");
         barDataSet3.setColor(Color.parseColor("#F26077"));
         barDataSet3.setBarShadowColor(Color.parseColor("#01000000"));
 
@@ -128,7 +127,7 @@ public class BarChart3s {
 
 
     public ArrayList<String> getXAxisValues(List<String> licenses) {
-        //List<String> licenses= new ArrayList<>();
+
         Log.e("5555", "getXAxisValues: " + licenses);
         ArrayList<String> xAxis = new ArrayList<String>();
         for (int i = 0; i < licenses.size(); i++) {
